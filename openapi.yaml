@@ -34,13 +34,11 @@ info:
     including these APIs, please see the following link: <a
     href="https://brightquery.com/terms-of-use/" target="_blank">Terms of
     Use.</a>
-
-
-    # Authentication
-
-
     <!-- ReDoc-Inject: <security-definitions> -->
-  version: 2.1.0
+  version: 2.1.1
+  x-logo:
+    url: 'https://github.com/pawar-amit12/api_docs/blob/main/BQ-logo.png'
+    altText: BQ logo
 servers:
   - url: https://apigateway.brightquery.com/auth
 tags:
