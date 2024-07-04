@@ -85,7 +85,7 @@ paths:
         description: Operation requires authorization header.
         content:
           application/json:
-            schema:
+            # schema:
               # $ref: '#/components/schemas/search'
             examples:
               'Scenario 1: Ticker Only':
