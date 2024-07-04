@@ -159,8 +159,8 @@ paths:
       security:
         - basicAuth: []
   
-
-securitySchemes:
-  basicAuth:
-    type: http
-    scheme: basic
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
