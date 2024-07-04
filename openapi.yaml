@@ -86,7 +86,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/search'
+              # $ref: '#/components/schemas/search'
             examples:
               'Scenario 1: Ticker Only':
                 description: Ticker exact match.
