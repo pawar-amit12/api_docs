@@ -1,0 +1,166 @@
+openapi: 3.0.1
+info:
+  title: BrightQuery API
+  description: >-
+    BrightQuery, Inc. ("BQ") is the leading provider of U.S. business
+    information, including firmographics, financials, credit events, employment,
+    and benefits information. BQ tracks all companies operating in the U.S. that
+    file taxes and have one or more employees (including the owner). BQ sources
+    all information from U.S. government filings, leveraging in particular
+    regulatory filings with the IRS, DOL, and the SEC. Finally, BQ provides over
+    5,000 fields, including company information, as well as aggregated
+    statistics on industries, sectors, counties, states, and the U.S. economy
+    overall.<br><br>This collection of APIs enables a client to search for a
+    company using parameters such as company name, address, and website. BQ’s
+    proprietary search algorithms utilize fuzzy matching to search and rank the
+    results. For a complete list of all fields that BQ can provide, including
+    detailed financials, please <a
+    href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_data_dictionary.xlsx"
+    >click here</a>. Please <a
+    href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_list+of+IRS+industries_subsector_sector_with_codes_Sep+2021.xlsx">click
+    here</a> to download the list of IRS industries, which is the primary
+    industry classification system used by BQ.<br><br>Please contact <a
+    href="mailto:sales@brightquery.com" >sales@brightquery.com</a> for sales and
+    <a href="mailto:support@brightquery.com" >support@brightquery.com</a> for
+    product support. You may also call 1-888-BQDATA1. Please visit <a
+    href="https://brightquery.com" target="_blank">https://brightquery.com/</a>
+    to learn more about BQ’s full suite of products, including bulk data
+    feeds.<br><br>© 2021 BrightQuery, Inc. All rights reserved. Visit us at: <a
+    href="https://brightquery.com"
+    target="_blank">https://www.brightquery.com</a>. Contact us at: <a href="
+    mailto:sales@brightquery.com">sales@brightquery.com</a>, <a
+    href="mailto:support@brightquery.com" >support@brightquery.com</a> or
+    1-888-BQDATA1. For the terms of use of BrightQuery data and products,
+    including these APIs, please see the following link: <a
+    href="https://brightquery.com/terms-of-use/" target="_blank">Terms of
+    Use.</a>
+
+
+    # Authentication
+
+
+    <!-- ReDoc-Inject: <security-definitions> -->
+  version: 2.1.0
+servers:
+  - url: https://apigateway.brightquery.com/auth
+tags:
+  - name: BQ APIs
+paths:
+  /advance-search:
+    post:
+      tags:
+        - BQ APIs
+      summary: BQ Advanced Search API
+      description: >-
+        The BQ Advanced Search API is generally suitable for clients in capital
+        markets, investment banking, consulting, private equity, and venture
+        capital. It is suitable for such purposes because the search results are
+        biased in favor of large companies as well as public companies. That is,
+        if two companies are equally matched to the search criteria entered by
+        the user, then the BQ Advanced Search API ranks higher in the results
+        the company that is larger or public. The BQ Advanced Search API is not
+        suitable for users looking for small companies, such as those with less
+        than 100 employees; such users should instead leverage the BQ Neutral
+        Search API.<br><br> The BQ Advanced Search API enables a user to find a
+        specific company. Searches can be performed using company name, address,
+        website, and other firmographic criteria. The top 10 results are
+        returned, including core firmographics (name, address, website, phone,
+        industry, etc.), employment, revenue, and payroll. The results of the BQ
+        Advanced Search API are sorted based on BQ’s proprietary match score
+        which is weighted in favor of large companies.<br><br> The drop-down
+        menu on the right provides a series of examples demonstrating how to use
+        the BQ Advanced Search API. <br><br>Please refer to <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_Search_API_Data_Dictionary.xlsx"
+        >BrightQuery_Search_API_Data_Dictionary</a> to obtain details of the
+        attributes in API response. For a complete list of all fields that BQ
+        can provide, including detailed financials, please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_data_dictionary.xlsx"
+        >click here</a>. Please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_list+of+IRS+industries_subsector_sector_with_codes_Sep+2021.xlsx">click
+        here</a> to download the list of IRS industries, which is the primary
+        industry classification system used by BQ.<br><br>The average response
+        time of the BQ Advanced Search API is 1 second.
+      requestBody:
+        required: true
+        description: Operation requires authorization header.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/search'
+            examples:
+              'Scenario 1: Ticker Only':
+                description: Ticker exact match.
+                value:
+                    ticker: 'MSFT'
+                    search_universe: 'org'
+                    
+              'Scenario 2: LEI Only':
+                description: LEI exact match.
+                value:
+                  lei: '7YNCQQNDK8FBM9BBTK25'
+                  search_universe: 'org'
+              'Scenario 3: CIK Only':
+                description: CIK exact match
+                value:
+                  cik: '0001128928'
+                  search_universe: 'org'
+              'Scenario 4: Website Only':
+                description: Website exact match<br/><b>search universe</b> is mandatory
+                value:
+                  website: '1010data.com'  
+                  search_universe: 'org'
+              'Scenario 5: EIN Only':
+                description: EIN exact match.
+                value:
+                  ein: '570384104'
+                  search_universe: 'org'
+              'Scenario 6: LinkedIn URL Only':
+                description: LinkedIn URL exact match.
+                value:
+                  linkedin_url: ''
+                  search_universe: 'org'
+              'Scenario 7: Name Only':
+                description: Company name (fuzzy search)
+                value:
+                  name: 'Flower'
+                  search_universe: 'org'
+              'Scenario 8: Name, Website':
+                description: Company name (fuzzy search) and website extact match
+                value:
+                  name: 'Flower'
+                  website: 'flowersfoods.com'
+                  search_universe: 'org'
+              'Scenario 8: Name, Address':
+                description: Company name (fuzzy search) and Address match
+                value:
+                  name: 'Flower'
+                  website: '1919 Flowers Cir'
+                  search_universe: 'org'
+      responses:
+        '200':
+          description: Successful Operation
+          # content:
+          #   application/json:              
+        '400':
+          description: Bad Request
+          # content:
+          #   application/json:              
+              # examples:
+              #   Bad Request, example 1:
+              #     value:
+              #       message: Invalid request body
+              #   Bad Request, example 2:
+              #     value:
+              #       message: Requested page (27) cannot be bigger than totalPages (22)
+        '401':
+          description: Authorization header is missing or invalid
+          # content:
+          #   application/json:
+      security:
+        - basicAuth: []
+  
+
+securitySchemes:
+  basicAuth:
+    type: http
+    scheme: basic
