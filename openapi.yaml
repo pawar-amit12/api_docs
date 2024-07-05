@@ -671,9 +671,9 @@ paths:
       security:
         - basicAuth: []  
     securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
+      basicAuth:
+        type: http
+        scheme: basic
   # tags:
   # - name: Business Identity API
   #   x-displayName: About the museum
