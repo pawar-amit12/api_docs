@@ -611,8 +611,7 @@ paths:
     get:
       summary: Firmographics
       tags:
-        - Extraction API
-      
+        - Extraction API      
       description: >-
         The BQ Advanced Search API is generally suitable for clients in capital
         markets, investment banking, consulting, private equity, and venture
@@ -642,7 +641,6 @@ paths:
         here</a> to download the list of IRS industries, which is the primary
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
-    content:
       parameters:
         - $ref: '#/components/parameters/bq_id'      
       responses:
