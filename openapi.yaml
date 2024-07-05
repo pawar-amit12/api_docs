@@ -642,6 +642,7 @@ paths:
         here</a> to download the list of IRS industries, which is the primary
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
+    content:
       parameters:
       - in: query
         name: bq_id
@@ -670,59 +671,17 @@ paths:
           # content:
           #   application/json:
       security:
-        - basicAuth: []
-  /museum-hours:
-    get:
-      summary: Get museum hours
-      description: Get upcoming museum operating hours
-      operationId: getMuseumHours
-      tags:
-        - Operations
-      parameters:
-        - $ref: '#/components/parameters/StartDate'
-        - $ref: '#/components/parameters/PaginationPage'
-        - $ref: '#/components/parameters/PaginationLimit'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetMuseumHoursResponse'
-              examples:
-                default:
-                  summary: Museum opening hours
-                  value:
-                    - date: '2023-09-11'
-                      timeOpen: '09:00'
-                      timeClose: '18:00'
-                    - date: '2023-09-12'
-                      timeOpen: '09:00'
-                      timeClose: '18:00'
-                    - date: '2023-09-13'
-                      timeOpen: '09:00'
-                      timeClose: '18:00'
-                    - date: '2023-09-17'
-                      timeOpen: '09:00'
-                      timeClose: '18:00'
-                closed:
-                  summary: The museum is closed
-                  value: []
-
-        '400':
-          description: Bad request
-        '404':
-          description: Not found
-  tags:
-  - name: Business Identity API
-    x-displayName: About the museum
-    description: Operational information about the museum.
-  - name: Append API
-    x-displayName: Upcoming events
-    description: Special events hosted by the Museum.
-  - name: Extraction API
-    x-displayName: Buy tickets
-    description: Museum tickets for general entrance or special events.
+        - basicAuth: []  
+  # tags:
+  # - name: Business Identity API
+  #   x-displayName: About the museum
+  #   description: Operational information about the museum.
+  # - name: Append API
+  #   x-displayName: Upcoming events
+  #   description: Special events hosted by the Museum.
+  # - name: Extraction API
+  #   x-displayName: Buy tickets
+  #   description: Museum tickets for general entrance or special events.
   # x-tagGroups:
   # - name: Plan your visit
   #   tags:
