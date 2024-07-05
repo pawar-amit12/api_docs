@@ -642,7 +642,7 @@ paths:
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
       parameters:
-        - $ref: '#/components/parameters/bq_id'      
+        - $ref: '#/components/schemas/parameters/bq_id'      
       responses:
         '200':
           description: Successful Operation
