@@ -670,27 +670,8 @@ paths:
           #   application/json:
       security:
         - basicAuth: []  
-    securitySchemes:
-      basicAuth:
-        type: http
-        scheme: basic
-  # tags:
-  # - name: Business Identity API
-  #   x-displayName: About the museum
-  #   description: Operational information about the museum.
-  # - name: Append API
-  #   x-displayName: Upcoming events
-  #   description: Special events hosted by the Museum.
-  # - name: Extraction API
-  #   x-displayName: Buy tickets
-  #   description: Museum tickets for general entrance or special events.
-  # x-tagGroups:
-  # - name: Plan your visit
-  #   tags:
-  #     - Business Identity API
-  #     - Append API
-
-  # - name: Purchases
-  #   tags:
-  #     - Tickets
-  
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
