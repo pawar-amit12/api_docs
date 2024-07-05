@@ -642,7 +642,12 @@ paths:
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
       parameters:
-        - $ref: '#/components/schemas/parameters/bq_id'      
+        - name: bq_id
+          in: query
+          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          schema:
+            type: integer
+            example: 100003273517
       responses:
         '200':
           description: Successful Operation
@@ -684,15 +689,6 @@ paths:
   # - name: Purchases
   #   tags:
   #     - Tickets
-components:
-  schemas:        
-    parameters:
-      name: bq_id
-      in: query
-      description: The starting date to retrieve future operating hours from. Defaults to today's date.
-      schema:
-        type: integer
-        example: 100003273517
   securitySchemes:
     basicAuth:
       type: http
