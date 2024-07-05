@@ -670,6 +670,10 @@ paths:
           #   application/json:
       security:
         - basicAuth: []  
+    securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
   # tags:
   # - name: Business Identity API
   #   x-displayName: About the museum
@@ -689,7 +693,4 @@ paths:
   # - name: Purchases
   #   tags:
   #     - Tickets
-  # securitySchemes:
-  #   basicAuth:
-  #     type: http
-  #     scheme: basic
+  
