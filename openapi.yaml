@@ -686,12 +686,13 @@ paths:
   #     - Tickets
 components:
   schemas:        
-    - name: bq_id
-      in: query
-      description: The starting date to retrieve future operating hours from. Defaults to today's date.
-      schema:
-        type: integer
-        example: 100003273517
+    parameters:
+      - name: bq_id
+        in: query
+        description: The starting date to retrieve future operating hours from. Defaults to today's date.
+        schema:
+          type: integer
+          example: 100003273517
   securitySchemes:
     basicAuth:
       type: http
