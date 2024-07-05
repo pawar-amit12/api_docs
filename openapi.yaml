@@ -651,19 +651,216 @@ paths:
       responses:
         '200':
           description: Successful Operation
-          # content:
-          #   application/json:              
         '400':
           description: Bad Request
+        '401':
+          description: Authorization header is missing or invalid
           # content:
-          #   application/json:              
-              # examples:
-              #   Bad Request, example 1:
-              #     value:
-              #       message: Invalid request body
-              #   Bad Request, example 2:
-              #     value:
-              #       message: Requested page (27) cannot be bigger than totalPages (22)
+          #   application/json:
+      security:
+        - basicAuth: []
+  /extraction_api/mr:
+    get:
+      summary: Financials - Most Recent(MR)
+      tags:
+        - Extraction API      
+      description: >-
+        The BQ Advanced Search API is generally suitable for clients in capital
+        markets, investment banking, consulting, private equity, and venture
+        capital. It is suitable for such purposes because the search results are
+        biased in favor of large companies as well as public companies. That is,
+        if two companies are equally matched to the search criteria entered by
+        the user, then the BQ Advanced Search API ranks higher in the results
+        the company that is larger or public. The BQ Advanced Search API is not
+        suitable for users looking for small companies, such as those with less
+        than 100 employees; such users should instead leverage the BQ Neutral
+        Search API.<br><br> The BQ Advanced Search API enables a user to find a
+        specific company. Searches can be performed using company name, address,
+        website, and other firmographic criteria. The top 10 results are
+        returned, including core firmographics (name, address, website, phone,
+        industry, etc.), employment, revenue, and payroll. The results of the BQ
+        Advanced Search API are sorted based on BQ’s proprietary match score
+        which is weighted in favor of large companies.<br><br> The drop-down
+        menu on the right provides a series of examples demonstrating how to use
+        the BQ Advanced Search API. <br><br>Please refer to <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_Search_API_Data_Dictionary.xlsx"
+        >BrightQuery_Search_API_Data_Dictionary</a> to obtain details of the
+        attributes in API response. For a complete list of all fields that BQ
+        can provide, including detailed financials, please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_data_dictionary.xlsx"
+        >click here</a>. Please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_list+of+IRS+industries_subsector_sector_with_codes_Sep+2021.xlsx">click
+        here</a> to download the list of IRS industries, which is the primary
+        industry classification system used by BQ.<br><br>The average response
+        time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: bq_id
+          in: query
+          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          schema:
+            type: integer
+            example: 100003273517
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Authorization header is missing or invalid
+          # content:
+          #   application/json:
+      security:
+        - basicAuth: []  
+  /extraction_api/ts:
+    get:
+      summary: Financials Time Series Annual (TS)
+      tags:
+        - Extraction API      
+      description: >-
+        The BQ Advanced Search API is generally suitable for clients in capital
+        markets, investment banking, consulting, private equity, and venture
+        capital. It is suitable for such purposes because the search results are
+        biased in favor of large companies as well as public companies. That is,
+        if two companies are equally matched to the search criteria entered by
+        the user, then the BQ Advanced Search API ranks higher in the results
+        the company that is larger or public. The BQ Advanced Search API is not
+        suitable for users looking for small companies, such as those with less
+        than 100 employees; such users should instead leverage the BQ Neutral
+        Search API.<br><br> The BQ Advanced Search API enables a user to find a
+        specific company. Searches can be performed using company name, address,
+        website, and other firmographic criteria. The top 10 results are
+        returned, including core firmographics (name, address, website, phone,
+        industry, etc.), employment, revenue, and payroll. The results of the BQ
+        Advanced Search API are sorted based on BQ’s proprietary match score
+        which is weighted in favor of large companies.<br><br> The drop-down
+        menu on the right provides a series of examples demonstrating how to use
+        the BQ Advanced Search API. <br><br>Please refer to <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_Search_API_Data_Dictionary.xlsx"
+        >BrightQuery_Search_API_Data_Dictionary</a> to obtain details of the
+        attributes in API response. For a complete list of all fields that BQ
+        can provide, including detailed financials, please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_data_dictionary.xlsx"
+        >click here</a>. Please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_list+of+IRS+industries_subsector_sector_with_codes_Sep+2021.xlsx">click
+        here</a> to download the list of IRS industries, which is the primary
+        industry classification system used by BQ.<br><br>The average response
+        time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: bq_id
+          in: query
+          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          schema:
+            type: integer
+            example: 100003273517
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Authorization header is missing or invalid
+          # content:
+          #   application/json:
+      security:
+        - basicAuth: []
+  /extraction_api/tsq:
+    get:
+      summary: Financials Time Series Quartely (TSQ)
+      tags:
+        - Extraction API      
+      description: >-
+        The BQ Advanced Search API is generally suitable for clients in capital
+        markets, investment banking, consulting, private equity, and venture
+        capital. It is suitable for such purposes because the search results are
+        biased in favor of large companies as well as public companies. That is,
+        if two companies are equally matched to the search criteria entered by
+        the user, then the BQ Advanced Search API ranks higher in the results
+        the company that is larger or public. The BQ Advanced Search API is not
+        suitable for users looking for small companies, such as those with less
+        than 100 employees; such users should instead leverage the BQ Neutral
+        Search API.<br><br> The BQ Advanced Search API enables a user to find a
+        specific company. Searches can be performed using company name, address,
+        website, and other firmographic criteria. The top 10 results are
+        returned, including core firmographics (name, address, website, phone,
+        industry, etc.), employment, revenue, and payroll. The results of the BQ
+        Advanced Search API are sorted based on BQ’s proprietary match score
+        which is weighted in favor of large companies.<br><br> The drop-down
+        menu on the right provides a series of examples demonstrating how to use
+        the BQ Advanced Search API. <br><br>Please refer to <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_Search_API_Data_Dictionary.xlsx"
+        >BrightQuery_Search_API_Data_Dictionary</a> to obtain details of the
+        attributes in API response. For a complete list of all fields that BQ
+        can provide, including detailed financials, please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_data_dictionary.xlsx"
+        >click here</a>. Please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_list+of+IRS+industries_subsector_sector_with_codes_Sep+2021.xlsx">click
+        here</a> to download the list of IRS industries, which is the primary
+        industry classification system used by BQ.<br><br>The average response
+        time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: bq_id
+          in: query
+          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          schema:
+            type: integer
+            example: 100003273517
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Authorization header is missing or invalid
+          # content:
+          #   application/json:
+      security:
+        - basicAuth: []
+  /extraction_api/tsm:
+    get:
+      summary: Financials Time Series Monthly (TSM)
+      tags:
+        - Extraction API      
+      description: >-
+        The BQ Advanced Search API is generally suitable for clients in capital
+        markets, investment banking, consulting, private equity, and venture
+        capital. It is suitable for such purposes because the search results are
+        biased in favor of large companies as well as public companies. That is,
+        if two companies are equally matched to the search criteria entered by
+        the user, then the BQ Advanced Search API ranks higher in the results
+        the company that is larger or public. The BQ Advanced Search API is not
+        suitable for users looking for small companies, such as those with less
+        than 100 employees; such users should instead leverage the BQ Neutral
+        Search API.<br><br> The BQ Advanced Search API enables a user to find a
+        specific company. Searches can be performed using company name, address,
+        website, and other firmographic criteria. The top 10 results are
+        returned, including core firmographics (name, address, website, phone,
+        industry, etc.), employment, revenue, and payroll. The results of the BQ
+        Advanced Search API are sorted based on BQ’s proprietary match score
+        which is weighted in favor of large companies.<br><br> The drop-down
+        menu on the right provides a series of examples demonstrating how to use
+        the BQ Advanced Search API. <br><br>Please refer to <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_Search_API_Data_Dictionary.xlsx"
+        >BrightQuery_Search_API_Data_Dictionary</a> to obtain details of the
+        attributes in API response. For a complete list of all fields that BQ
+        can provide, including detailed financials, please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_data_dictionary.xlsx"
+        >click here</a>. Please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_list+of+IRS+industries_subsector_sector_with_codes_Sep+2021.xlsx">click
+        here</a> to download the list of IRS industries, which is the primary
+        industry classification system used by BQ.<br><br>The average response
+        time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: bq_id
+          in: query
+          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          schema:
+            type: integer
+            example: 100003273517
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
         '401':
           description: Authorization header is missing or invalid
           # content:
