@@ -77,6 +77,25 @@ paths:
         here</a> to download the list of IRS industries, which is the primary
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: ticker
+          in: query
+          description: TICKER of the Organization if it is public.
+          schema:
+            type: string
+            example: MSFT
+        - name: ticker_parent
+          in: query
+          description: TICKER of the Organization's parent holding company if the parent is publicly listed.
+          schema:
+            type: string
+            example: MSFT
+        - name: ticker_related
+          in: query
+          description: All TICKERs associated with the Organization if it is publicly listed.
+          schema:
+            type: string
+            example: MSFT
       requestBody:
         required: true
         description: Operation requires authorization header.
