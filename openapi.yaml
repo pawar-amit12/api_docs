@@ -41,13 +41,14 @@ info:
     altText: BQ logo
 servers:
   - url: https://apigateway.brightquery.com/auth
-paths:
+tags:
+  - name: BQ APIs
+paths:  
   /advance-search/org:
     post:
       summary: Organization Search API
       tags:
-        - Business Identity API
-      
+        - Business Identity API      
       description: >-
         The BQ Advanced Search API is generally suitable for clients in capital
         markets, investment banking, consulting, private equity, and venture
@@ -81,21 +82,64 @@ paths:
         - name: ticker
           in: query
           description: TICKER of the Organization if it is public.
+          required: true
           schema:
             type: string
-            example: MSFT
+            example: "MSFT"
         - name: ticker_parent
           in: query
           description: TICKER of the Organization's parent holding company if the parent is publicly listed.
           schema:
             type: string
-            example: MSFT
+            example: "MSFT"
         - name: ticker_related
           in: query
           description: All TICKERs associated with the Organization if it is publicly listed.
           schema:
             type: string
-            example: MSFT
+            example: "MSFT"
+        - name: lei
+          in: query
+          description: Legal Entity Identifier of the Organization.
+          schema:
+            type: string
+            example: "7YNCQQNDK8FBM9BBTK25"
+        - name: cik
+          in: query
+          description: Central Index Key (CIK) is a unique number issued by the SEC.
+          schema:
+            type: string
+            example: "0001128928"
+        - name: website
+          in: query
+          description: Link to the Organization's primary website.
+          schema:
+            type: string
+            example: "1010data.com"
+        - name: ein
+          in: query
+          description: Unique number issued by the IRS given to the Organization.
+          schema:
+            type: string
+            example: "570384104"
+        - name: linkedin_url
+          in: query
+          description: Organization Linkedin URL.
+          schema:
+            type: string
+            example: "www.linkedin.com/flowers"
+        - name: company_name
+          in: query
+          description: Name of Organization.
+          schema:
+            type: string
+            example: "FLOWERS FOODS INC"
+        - name: address
+          in: query
+          description: Address of Organization.
+          schema:
+            type: string
+            example: "1919 Flowers Cir Thomasville, GA 31757"
       requestBody:
         required: true
         description: Operation requires authorization header.
@@ -104,74 +148,51 @@ paths:
             # schema:
               # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker Only':
-                description: Ticker exact match.
+              'Scenario 1: Ticker ':
+                description: Ticker.
                 value:
-                    ticker: 'MSFT'
-                    search_universe: 'org'
-                    
-              'Scenario 2: LEI Only':
-                description: LEI exact match.
+                    ticker: 'MSFT'                    
+              'Scenario 2: LEI ':
+                description: LEI.
                 value:
                   lei: '7YNCQQNDK8FBM9BBTK25'
-                  search_universe: 'org'
-              'Scenario 3: CIK Only':
-                description: CIK exact match
+              'Scenario 3: CIK ':
+                description: CIK
                 value:
                   cik: '0001128928'
-                  search_universe: 'org'
-              'Scenario 4: Website Only':
-                description: Website exact match<br/><b>search universe</b> is mandatory
+              'Scenario 4: Website ':
+                description: Website<br/><b>search universe</b> is mandatory
                 value:
-                  website: '1010data.com'  
-                  search_universe: 'org'
-              'Scenario 5: EIN Only':
-                description: EIN exact match.
+                  website: '1010data.com'
+              'Scenario 5: EIN ':
+                description: EIN.
                 value:
                   ein: '570384104'
-                  search_universe: 'org'
-              'Scenario 6: LinkedIn URL Only':
-                description: LinkedIn URL exact match.
+              'Scenario 6: LinkedIn URL':
+                description: LinkedIn URL.
                 value:
-                  linkedin_url: ''
-                  search_universe: 'org'
-              'Scenario 7: Name Only':
+                  linkedin_url: 'www.linkedin.com/flowers'
+              'Scenario 7: Name ':
                 description: Company name (fuzzy search)
                 value:
                   name: 'Flower'
-                  search_universe: 'org'
               'Scenario 8: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
                   name: 'Flower'
                   website: 'flowersfoods.com'
-                  search_universe: 'org'
               'Scenario 8: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
                   name: 'Flower'
                   website: '1919 Flowers Cir'
-                  search_universe: 'org'
       responses:
         '200':
-          description: Successful Operation
-          # content:
-          #   application/json:              
+          description: Successful Operation          
         '400':
           description: Bad Request
-          # content:
-          #   application/json:              
-              # examples:
-              #   Bad Request, example 1:
-              #     value:
-              #       message: Invalid request body
-              #   Bad Request, example 2:
-              #     value:
-              #       message: Requested page (27) cannot be bigger than totalPages (22)
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
       security:
         - basicAuth: []
   /advance-search/le:
@@ -217,38 +238,37 @@ paths:
             # schema:
               # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker Only':
-                description: Ticker exact match.
+              'Scenario 1: Ticker ':
+                description: Ticker.
                 value:
                     ticker: 'MSFT'
-                    search_universe: 'org'
                     
-              'Scenario 2: LEI Only':
-                description: LEI exact match.
+              'Scenario 2: LEI ':
+                description: LEI.
                 value:
                   lei: '7YNCQQNDK8FBM9BBTK25'
                   search_universe: 'org'
-              'Scenario 3: CIK Only':
-                description: CIK exact match
+              'Scenario 3: CIK ':
+                description: CIK
                 value:
                   cik: '0001128928'
                   search_universe: 'org'
-              'Scenario 4: Website Only':
-                description: Website exact match<br/><b>search universe</b> is mandatory
+              'Scenario 4: Website ':
+                description: Website<br/><b>search universe</b> is mandatory
                 value:
                   website: '1010data.com'  
                   search_universe: 'org'
-              'Scenario 5: EIN Only':
-                description: EIN exact match.
+              'Scenario 5: EIN ':
+                description: EIN.
                 value:
                   ein: '570384104'
                   search_universe: 'org'
-              'Scenario 6: LinkedIn URL Only':
-                description: LinkedIn URL exact match.
+              'Scenario 6: LinkedIn URL ':
+                description: LinkedIn URL.
                 value:
                   linkedin_url: ''
                   search_universe: 'org'
-              'Scenario 7: Name Only':
+              'Scenario 7: Name ':
                 description: Company name (fuzzy search)
                 value:
                   name: 'Flower'
@@ -330,38 +350,37 @@ paths:
             # schema:
               # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker Only':
-                description: Ticker exact match.
+              'Scenario 1: Ticker ':
+                description: Ticker.
                 value:
                     ticker: 'MSFT'
-                    search_universe: 'org'
                     
-              'Scenario 2: LEI Only':
-                description: LEI exact match.
+              'Scenario 2: LEI ':
+                description: LEI.
                 value:
                   lei: '7YNCQQNDK8FBM9BBTK25'
                   search_universe: 'org'
-              'Scenario 3: CIK Only':
-                description: CIK exact match
+              'Scenario 3: CIK ':
+                description: CIK
                 value:
                   cik: '0001128928'
                   search_universe: 'org'
-              'Scenario 4: Website Only':
-                description: Website exact match<br/><b>search universe</b> is mandatory
+              'Scenario 4: Website ':
+                description: Website<br/><b>search universe</b> is mandatory
                 value:
                   website: '1010data.com'  
                   search_universe: 'org'
-              'Scenario 5: EIN Only':
-                description: EIN exact match.
+              'Scenario 5: EIN ':
+                description: EIN.
                 value:
                   ein: '570384104'
                   search_universe: 'org'
-              'Scenario 6: LinkedIn URL Only':
-                description: LinkedIn URL exact match.
+              'Scenario 6: LinkedIn URL ':
+                description: LinkedIn URL.
                 value:
                   linkedin_url: ''
                   search_universe: 'org'
-              'Scenario 7: Name Only':
+              'Scenario 7: Name ':
                 description: Company name (fuzzy search)
                 value:
                   name: 'Flower'
@@ -443,38 +462,37 @@ paths:
             # schema:
               # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker Only':
-                description: Ticker exact match.
+              'Scenario 1: Ticker ':
+                description: Ticker.
                 value:
                     ticker: 'MSFT'
-                    search_universe: 'org'
                     
-              'Scenario 2: LEI Only':
-                description: LEI exact match.
+              'Scenario 2: LEI ':
+                description: LEI.
                 value:
                   lei: '7YNCQQNDK8FBM9BBTK25'
                   search_universe: 'org'
-              'Scenario 3: CIK Only':
-                description: CIK exact match
+              'Scenario 3: CIK ':
+                description: CIK
                 value:
                   cik: '0001128928'
                   search_universe: 'org'
-              'Scenario 4: Website Only':
-                description: Website exact match<br/><b>search universe</b> is mandatory
+              'Scenario 4: Website ':
+                description: Website<br/><b>search universe</b> is mandatory
                 value:
                   website: '1010data.com'  
                   search_universe: 'org'
-              'Scenario 5: EIN Only':
-                description: EIN exact match.
+              'Scenario 5: EIN ':
+                description: EIN.
                 value:
                   ein: '570384104'
                   search_universe: 'org'
-              'Scenario 6: LinkedIn URL Only':
-                description: LinkedIn URL exact match.
+              'Scenario 6: LinkedIn URL ':
+                description: LinkedIn URL.
                 value:
                   linkedin_url: ''
                   search_universe: 'org'
-              'Scenario 7: Name Only':
+              'Scenario 7: Name ':
                 description: Company name (fuzzy search)
                 value:
                   name: 'Flower'
@@ -556,38 +574,37 @@ paths:
             # schema:
               # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker Only':
-                description: Ticker exact match.
+              'Scenario 1: Ticker ':
+                description: Ticker.
                 value:
                     ticker: 'MSFT'
-                    search_universe: 'org'
                     
-              'Scenario 2: LEI Only':
-                description: LEI exact match.
+              'Scenario 2: LEI ':
+                description: LEI.
                 value:
                   lei: '7YNCQQNDK8FBM9BBTK25'
                   search_universe: 'org'
-              'Scenario 3: CIK Only':
-                description: CIK exact match
+              'Scenario 3: CIK ':
+                description: CIK
                 value:
                   cik: '0001128928'
                   search_universe: 'org'
-              'Scenario 4: Website Only':
-                description: Website exact match<br/><b>search universe</b> is mandatory
+              'Scenario 4: Website ':
+                description: Website<br/><b>search universe</b> is mandatory
                 value:
                   website: '1010data.com'  
                   search_universe: 'org'
-              'Scenario 5: EIN Only':
-                description: EIN exact match.
+              'Scenario 5: EIN ':
+                description: EIN.
                 value:
                   ein: '570384104'
                   search_universe: 'org'
-              'Scenario 6: LinkedIn URL Only':
-                description: LinkedIn URL exact match.
+              'Scenario 6: LinkedIn URL ':
+                description: LinkedIn URL.
                 value:
                   linkedin_url: ''
                   search_universe: 'org'
-              'Scenario 7: Name Only':
+              'Scenario 7: Name ':
                 description: Company name (fuzzy search)
                 value:
                   name: 'Flower'
