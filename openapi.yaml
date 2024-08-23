@@ -929,46 +929,37 @@ components:
           properties:
             id:
               type: string
-              examples:
-                - toplevel
+              example: toplevel
             relevance:
               type: integer
-              examples:
-                - 1
+              example: 1
             fields:
               type: object
               properties:
                 totalCount:
                   type: integer
-                  examples:
-                    - 1
+                  example: 10
             coverage:
               type: object
               properties:
                 coverage:
                   type: integer
-                  examples:
-                    - 100
+                  example: 100
                 documents:
                   type: integer
-                  examples:
-                    - 101316736
+                  example: 101316736
                 full:
                   type: string
-                  examples:
-                    - 'true'
+                  example: 'true'
                 nodes:
                   type: integer
-                  examples:
-                    - 10
+                  example: 10
                 results:
                   type: integer
-                  examples:
-                    - 1
+                  example: 1
                 resultsFull:
                   type: integer
-                  examples:
-                    - 1
+                  example: 1
             children:
               type: array
               items:
@@ -1007,390 +998,98 @@ components:
                 properties:
                   bq_organization_id:
                     type: string
-                    examples:
-                      - '100003273517'
-                      - '100000002731'
-                      - '100067967990'
-                      - '100003271354'
-                      - '100068157316'
-                      - '100009398821'
-                      - '100029440661'
-                      - '100068024189'
-                      - '100029442782'
-                      - '100008670383'
+                    example: '100003273517'
                   bq_organization_name:
                     type: string
-                    examples:
-                      - FLOWERS FOODS INC
-                      - 1 800 FLOWERS COM INC
-                      - NEW FLOWER MARKET, INC., DBA SUNFLOWER FARMERS MARKET
-                      - FLOWERS, INC.
-                      - FLOWERS CONSTRUCTION
-                      - W. LEE FLOWERS & COMPANY, INC.
-                      - FLOWERS BAKING COMPANY OF SAN ANTONIO LLC.
-                      - >-
-                        FLOWER MOUND HOSPITAL PARTNERS, LLC.DBA TEXAS HEALTH
-                        PRESBYTERIAN HOSP
-                      - FLOWER IMPORTS, LLC.
-                      - THE FLOWERS COMPANY, INC.
+                    example: FLOWERS FOODS INC
                   bq_organization_legal_name:
                     type: string
-                    examples:
-                      - FLOWERS FOODS, INC
-                      - 1-800-FLOWERS RETAIL INC
-                      - NEW FLOWER MARKET, INC.
-                      - FLOWERS, INC
-                      - FLOWERS CONSTRUCTION
-                      - W. LEE FLOWERS AND COMPANY, LLC
-                      - FLOWERS & FRILLS OF SAN ANTONIO, INC
-                      - FLOWER MOUND HOSPITAL PARTNERS, LLC.
-                      - FLOWERS IMPORTS, LLC
-                      - THE FLOWERS COMPANY
+                    example: FLOWERS FOODS, INC
                   bq_organization_active_indicator:
                     type: integer
-                    examples:
-                      - 1
-                      - 1
-                      - 0
-                      - 1
-                      - 0
-                      - 1
-                      - 1
-                      - 1
-                      - 1
-                      - 1
+                    example: 1
                   bq_organization_address1_line_1:
                     type: string
-                    examples:
-                      - 1919 Flowers Cir
-                      - 2 Jericho Plz Ste 200
-                      - 2585 Central Ave Ste 200
-                      - 325 Cleveland Rd
-                      - 115 W 7th St Ste 1410
-                      - 120 4th St SW
-                      - 6000 NE Loop 410
-                      - 4400 Long Prairie Rd
-                      - 1610 E Jackson St
-                      - 935 US Highway 70 SE
+                    example: 1919 Flowers Cir
                   bq_organization_address1_city:
                     type: string
-                    examples:
-                      - Thomasville
-                      - Jericho
-                      - Boulder
-                      - Bogart
-                      - Fort Worth
-                      - Hickory
-                      - San Antonio
-                      - Flower Mound
-                      - Thomasville
-                      - Hickory
+                    example: Thomasville
                   bq_organization_address1_state:
                     type: string
-                    examples:
-                      - GA
-                      - NY
-                      - CO
-                      - GA
-                      - TX
-                      - NC
-                      - TX
-                      - TX
-                      - GA
-                      - NC
+                    example: GA
                   bq_organization_address1_state_name:
                     type: string
-                    examples:
-                      - Georgia
-                      - New York
-                      - Colorado
-                      - Georgia
-                      - Texas
-                      - North Carolina
-                      - Texas
-                      - Texas
-                      - Georgia
-                      - North Carolina
+                    example: Georgia
                   bq_organization_address1_county_name:
                     type: string
-                    examples:
-                      - Thomas County
-                      - Nassau County
-                      - Boulder County
-                      - Clarke County
-                      - Tarrant County
-                      - Catawba County
-                      - Bexar County
-                      - Denton County
-                      - Thomas County
-                      - Catawba County
+                    example: Thomas County
                   bq_organization_address1_country:
                     type: string
-                    examples:
-                      - United States
-                      - United States
-                      - United States
-                      - United States
-                      - United States
-                      - United States
-                      - United States
-                      - United States
-                      - United States
-                      - United States
+                    example: United States
                   bq_organization_address1_zip5:
                     type: string
-                    examples:
-                      - '31757'
-                      - '11753'
-                      - '80301'
-                      - '30622'
-                      - '76102'
-                      - '28602'
-                      - '78218'
-                      - '75028'
-                      - '31792'
-                      - '28602'
+                    example: '31757'
                   bq_organization_address_summary:
                     type: string
-                    examples:
-                      - 1919 Flowers Cir, Thomasville, Georgia GA, 31757
-                      - 2 Jericho Plz Ste 200, Jericho, New York NY, 11753
-                      - 2585 Central Ave Ste 200, Boulder, Colorado CO, 80301
-                      - 325 Cleveland Rd, Bogart, Georgia GA, 30622
-                      - 115 W 7th St Ste 1410, Fort Worth, Texas TX, 76102
-                      - 120 4th St SW, Hickory, North Carolina NC, 28602
-                      - 6000 NE Loop 410, San Antonio, Texas TX, 78218
-                      - 4400 Long Prairie Rd, Flower Mound, Texas TX, 75028
-                      - 1610 E Jackson St, Thomasville, Georgia GA, 31792
-                      - 935 US Highway 70 SE, Hickory, North Carolina NC, 28602
+                    example: 1919 Flowers Cir, Thomasville, Georgia GA, 31757
                   bq_organization_website:
                     type: string
-                    examples:
-                      - https://flowersfoods.com/
-                      - https://www.1800flowers.com/
-                      - ''
-                      - https://www.burtonandburton.com
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - https://www.flowershonda.com
-                      - ''
+                    example: https://flowersfoods.com/
                   bq_organization_ein:
                     type: string
-                    examples:
-                      - '582582379'
-                      - '113267496'
-                      - '383664887'
-                      - '580811291'
-                      - '742213922'
-                      - ''
-                      - '742720708'
-                      - ''
-                      - '452493790'
-                      - '560705002'
+                    example: '582582379'
                   bq_organization_cik:
                     type: string
-                    examples:
-                      - '0001128928'
-                      - '0001084869'
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
+                    example: '0001128928'
                   bq_organization_lei:
                     type: string
-                    examples:
-                      - 7YNCQQNDK8FBM9BBTK25
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
+                    example: 7YNCQQNDK8FBM9BBTK25
                   bq_organization_ticker:
                     type: string
-                    examples:
-                      - FLO
-                      - FLWS
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
+                    example: FLO
                   bq_organization_naics_sector_name:
                     type: string
-                    examples:
-                      - Manufacturing
-                      - Retail Trade
-                      - Retail Trade
-                      - Wholesale Trade
-                      - Construction
-                      - Retail Trade
-                      - Manufacturing
-                      - Health Care and Social Assistance
-                      - Retail Trade
-                      - Wholesale Trade
+                    example: Manufacturing
                   bq_legal_entity_id:
                     type: string
-                    examples:
-                      - BQ_US_GA_0046273
-                      - BQ_US_DE_2512087
-                      - ''
-                      - BQ_US_GA_A002803
-                      - ''
-                      - BQ_US_SC_324420
-                      - BQ_US_TX_0113833200
-                      - ''
-                      - BQ_US_GA_11045238
-                      - BQ_US_NC_0053824
+                    example: BQ_US_GA_0046273
                   bq_legal_entity_name:
                     type: string
-                    examples:
-                      - FLOWERS FOODS, INC
-                      - 1-800-FLOWERS RETAIL INC
-                      - ''
-                      - FLOWERS, INC
-                      - ''
-                      - W. LEE FLOWERS AND COMPANY, LLC
-                      - FLOWERS & FRILLS OF SAN ANTONIO, INC
-                      - ''
-                      - FLOWERS IMPORTS, LLC
-                      - THE FLOWERS COMPANY
+                    example: FLOWERS FOODS, INC
                   bq_legal_entity_address1_line_1:
                     type: string
-                    examples:
-                      - 1919 Flowers Cir
-                      - Corporation Trust Center 1209 Orange St Wilmington New Castle
-                      - ''
-                      - 325 Cleveland Rd
-                      - ''
-                      - 2 Office Park Ct Ste 103
-                      - 7553 McCullough Ave
-                      - ''
-                      - 1610 E Jackson St
-                      - 935 US Highway 70 SE
+                    example: 1919 Flowers Cir
                   bq_legal_entity_address1_city:
                     type: string
-                    examples:
-                      - Thomasville
-                      - Wilmington
-                      - ''
-                      - Bogart
-                      - ''
-                      - Columbia
-                      - San Antonio
-                      - ''
-                      - Thomasville
-                      - Hickory
+                    example: Thomasville
                   bq_legal_entity_address1_state:
                     type: string
-                    examples:
-                      - GA
-                      - DE
-                      - ''
-                      - GA
-                      - ''
-                      - SC
-                      - TX
-                      - ''
-                      - GA
-                      - NC
+                    example: GA
                   bq_legal_entity_address1_zip5:
                     type: string
-                    examples:
-                      - '31757'
-                      - '19801'
-                      - ''
-                      - '30622'
-                      - ''
-                      - '29223'
-                      - '78216'
-                      - ''
-                      - '31792'
-                      - '28602'
+                    example: '31757'
                   bq_organization_linkedin_url:
                     type: string
-                    examples:
-                      - https://www.linkedin.com/company/flowers-foods/
-                      - https://www.linkedin.com/company/1800flowers-com/
-                      - https://www.linkedin.com/company/sprouts-farmers-market/
-                      - https://www.linkedin.com/company/burton-burton
-                      - ''
-                      - https://www.linkedin.com/company/w.-lee-flowers-&-co.-inc.
-                      - >-
-                        https://www.linkedin.com/company/flowers-baking-co.-of-san-antonio-llc
-                      - ''
-                      - ''
-                      - https://www.linkedin.com/company/the-flowers-company-inc-
+                    example: https://www.linkedin.com/company/flowers-foods/
                   bq_tickers_related:
                     type: array
                   bq_ticker_parent:
                     type: string
-                    examples:
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
-                      - ''
+                    example: ''
                   bq_match_types:
                     type: string
-                    examples:
-                      - Name Only
-                      - Name Only
-                      - Name Only
-                      - Name Only
-                      - Name Only
-                      - Name Only
-                      - Name Only
-                      - Name Only
-                      - Name Only
-                      - Name Only
+                    example: Name Only
                   bq_revenue_range:
                     type: string
-                    examples:
-                      - '> $1 Billion'
-                      - '> $1 Billion'
-                      - $100 Million - $1 Billion
-                      - $100 Million - $1 Billion
-                      - $100 Million - $1 Billion
-                      - < $100 Million
-                      - < $100 Million
-                      - < $100 Million
-                      - < $100 Million
-                      - < $100 Million
+                    example: '> $1 Billion'
                   bq_employment_range:
                     type: string
-                    examples:
-                      - 500 - 10,000
-                      - 500 - 10,000
-                      - 500 - 10,000
-                      - < 500
-                      - < 500
-                      - 500 - 10,000
-                      - < 500
-                      - 500 - 10,000
-                      - < 500
-                      - < 500
+                    example: 500 - 10,000
         status:
           type: integer
-          examples:
-            - 200
+          example: 200
+
+
     response_200:
       type: object
       properties:
