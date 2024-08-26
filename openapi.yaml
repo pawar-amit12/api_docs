@@ -114,7 +114,7 @@ paths:
           description: Link to the Organization's primary website.
           schema:
             type: string
-            example: "1010data.com"
+            example: "www.flowersfoods.com"
         - name: ein
           in: query
           description: Unique number issued by the IRS given to the Organization.
@@ -139,6 +139,18 @@ paths:
           schema:
             type: string
             example: "1919 Flowers Cir Thomasville, GA 31757"
+        - name: email
+          in: query
+          description: Email of Organization.
+          schema:
+            type: string
+            example: "joe@www.flowersfoods.com"
+        - name: bq_id
+          in: query
+          description: Unique ID assigned by BQ to the Organization.
+          schema:
+            type: string
+            example: "100003273517"
       requestBody:
         required: true
         content:
@@ -157,9 +169,9 @@ paths:
                 value:
                   cik: '0001128928'
               'Scenario 4: Website ':
-                description: Website<br/><b>search universe</b> is mandatory
+                description: Website
                 value:
-                  website: '1010data.com'
+                  website: 'www.flowersfoods.com'
               'Scenario 5: EIN ':
                 description: EIN.
                 value:
@@ -172,12 +184,20 @@ paths:
                 description: Company name (fuzzy search)
                 value:
                   company_name: 'Flower'
-              'Scenario 8: Name, Website':
+              'Scenario 8: Email ':
+                description: Email
+                value:
+                  email: 'joe@www.flowersfoods.com'
+              'Scenario 9: BQ ID ':
+                description: BQ ID
+                value:
+                  bq_id: '100003273517'
+              'Scenario 10: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
                   company_name: 'Flower'
-                  website: 'flowersfoods.com'
-              'Scenario 8: Name, Address':
+                  website: 'www.flowersfoods.com'
+              'Scenario 11: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
                   company_name: 'Flower'
@@ -246,81 +266,95 @@ paths:
         here</a> to download the list of IRS industries, which is the primary
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: company_name
+          in: query
+          description: Legal name of the Legal Entity.
+          schema:
+            type: string
+            example: "FLOWERS FOODS INC"
+        - name: ein
+          in: query
+          description: Unique number issued by the IRS given to the Organization.
+          schema:
+            type: string
+            example: "570384104"        
+        - name: website
+          in: query
+          description: Link to the Organization's primary website.
+          schema:
+            type: string
+            example: "www.flowersfoods.com"                        
+        - name: address
+          in: query
+          description: Address of Legal Entity.
+          schema:
+            type: string
+            example: "Apple Park Way Cupertino"
+        - name: email
+          in: query
+          description: Email of Organization.
+          schema:
+            type: string
+            example: "joe@www.flowersfoods.com"
       requestBody:
         required: true
-        description: Operation requires authorization header.
         content:
           application/json:
-            # schema:
-              # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker ':
-                description: Ticker.
-                value:
-                    ticker: 'MSFT'
-                    
-              'Scenario 2: LEI ':
-                description: LEI.
-                value:
-                  lei: '7YNCQQNDK8FBM9BBTK25'
-                  search_universe: 'org'
-              'Scenario 3: CIK ':
-                description: CIK
-                value:
-                  cik: '0001128928'
-                  search_universe: 'org'
-              'Scenario 4: Website ':
-                description: Website<br/><b>search universe</b> is mandatory
-                value:
-                  website: '1010data.com'  
-                  search_universe: 'org'
-              'Scenario 5: EIN ':
-                description: EIN.
-                value:
-                  ein: '570384104'
-                  search_universe: 'org'
-              'Scenario 6: LinkedIn URL ':
-                description: LinkedIn URL.
-                value:
-                  linkedin_url: ''
-                  search_universe: 'org'
-              'Scenario 7: Name ':
+              'Scenario 1: Name ':
                 description: Company name (fuzzy search)
                 value:
-                  name: 'Flower'
-                  search_universe: 'org'
-              'Scenario 8: Name, Website':
+                  company_name: 'Flower' 
+              'Scenario 2: EIN ':
+                description: EIN.
+                value:
+                  ein: '570384104'                                         
+              'Scenario 3: Website ':
+                description: Website
+                value:
+                  website: 'www.flowersfoods.com'              
+              'Scenario 4: Email ':
+                description: Email
+                value:
+                  email: 'joe@www.flowersfoods.com'              
+              'Scenario 5: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
-                  name: 'Flower'
-                  website: 'flowersfoods.com'
-                  search_universe: 'org'
-              'Scenario 8: Name, Address':
+                  company_name: 'Flower'
+                  website: 'www.flowersfoods.com'
+              'Scenario 6: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
-                  name: 'Flower'
+                  company_name: 'Flower'
                   website: '1919 Flowers Cir'
-                  search_universe: 'org'
       responses:
         '200':
           description: Successful Operation
-          # content:
-          #   application/json:              
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_le_res_200'          
         '400':
           description: Bad Request
-          # content:
-          #   application/json:              
-              # examples:
-              #   Bad Request, example 1:
-              #     value:
-              #       message: Invalid request body
-              #   Bad Request, example 2:
-              #     value:
-              #       message: Requested page (27) cannot be bigger than totalPages (22)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: Invalid search parameters
+                    
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []
   /advance-search/officers:
@@ -358,81 +392,49 @@ paths:
         here</a> to download the list of IRS industries, which is the primary
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: officer_name
+          in: query
+          description: Name of Officer.
+          schema:
+            type: string
+            example: "Elon Musk"        
       requestBody:
         required: true
-        description: Operation requires authorization header.
         content:
           application/json:
-            # schema:
-              # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker ':
-                description: Ticker.
+              'Scenario 1: Officer Name ':
+                description: Officer Name
                 value:
-                    ticker: 'MSFT'
-                    
-              'Scenario 2: LEI ':
-                description: LEI.
-                value:
-                  lei: '7YNCQQNDK8FBM9BBTK25'
-                  search_universe: 'org'
-              'Scenario 3: CIK ':
-                description: CIK
-                value:
-                  cik: '0001128928'
-                  search_universe: 'org'
-              'Scenario 4: Website ':
-                description: Website<br/><b>search universe</b> is mandatory
-                value:
-                  website: '1010data.com'  
-                  search_universe: 'org'
-              'Scenario 5: EIN ':
-                description: EIN.
-                value:
-                  ein: '570384104'
-                  search_universe: 'org'
-              'Scenario 6: LinkedIn URL ':
-                description: LinkedIn URL.
-                value:
-                  linkedin_url: ''
-                  search_universe: 'org'
-              'Scenario 7: Name ':
-                description: Company name (fuzzy search)
-                value:
-                  name: 'Flower'
-                  search_universe: 'org'
-              'Scenario 8: Name, Website':
-                description: Company name (fuzzy search) and website extact match
-                value:
-                  name: 'Flower'
-                  website: 'flowersfoods.com'
-                  search_universe: 'org'
-              'Scenario 8: Name, Address':
-                description: Company name (fuzzy search) and Address match
-                value:
-                  name: 'Flower'
-                  website: '1919 Flowers Cir'
-                  search_universe: 'org'
+                  company_name: 'Elon Musk'               
       responses:
         '200':
           description: Successful Operation
-          # content:
-          #   application/json:              
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_officers_res_200'          
         '400':
           description: Bad Request
-          # content:
-          #   application/json:              
-              # examples:
-              #   Bad Request, example 1:
-              #     value:
-              #       message: Invalid request body
-              #   Bad Request, example 2:
-              #     value:
-              #       message: Requested page (27) cannot be bigger than totalPages (22)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: Invalid search parameters
+                    
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []
   /bq-append/org:
@@ -470,81 +472,157 @@ paths:
         here</a> to download the list of IRS industries, which is the primary
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: ticker
+          in: query
+          description: TICKER of the Organization if it is public.
+          schema:
+            type: string
+            example: "MSFT"
+        - name: ticker_parent
+          in: query
+          description: TICKER of the Organization's parent holding company if the parent is publicly listed.
+          schema:
+            type: string
+            example: "MSFT"
+        - name: ticker_related
+          in: query
+          description: All TICKERs associated with the Organization if it is publicly listed.
+          schema:
+            type: string
+            example: "MSFT"
+        - name: lei
+          in: query
+          description: Legal Entity Identifier of the Organization.
+          schema:
+            type: string
+            example: "7YNCQQNDK8FBM9BBTK25"
+        - name: cik
+          in: query
+          description: Central Index Key (CIK) is a unique number issued by the SEC.
+          schema:
+            type: string
+            example: "0001128928"
+        - name: website
+          in: query
+          description: Link to the Organization's primary website.
+          schema:
+            type: string
+            example: "www.flowersfoods.com"
+        - name: ein
+          in: query
+          description: Unique number issued by the IRS given to the Organization.
+          schema:
+            type: string
+            example: "570384104"
+        - name: linkedin_url
+          in: query
+          description: Organization Linkedin URL.
+          schema:
+            type: string
+            example: "www.linkedin.com/flowers"
+        - name: company_name
+          in: query
+          description: Name of Organization.
+          schema:
+            type: string
+            example: "FLOWERS FOODS INC"
+        - name: address
+          in: query
+          description: Address of Organization.
+          schema:
+            type: string
+            example: "1919 Flowers Cir Thomasville, GA 31757"
+        - name: email
+          in: query
+          description: Email of Organization.
+          schema:
+            type: string
+            example: "joe@www.flowersfoods.com"
+        - name: bq_id
+          in: query
+          description: Unique ID assigned by BQ to the Organization.
+          schema:
+            type: string
+            example: "100003273517"
       requestBody:
         required: true
-        description: Operation requires authorization header.
         content:
           application/json:
-            # schema:
-              # $ref: '#/components/schemas/search'
             examples:
               'Scenario 1: Ticker ':
                 description: Ticker.
                 value:
-                    ticker: 'MSFT'
-                    
+                    ticker: 'MSFT'                    
               'Scenario 2: LEI ':
                 description: LEI.
                 value:
                   lei: '7YNCQQNDK8FBM9BBTK25'
-                  search_universe: 'org'
               'Scenario 3: CIK ':
                 description: CIK
                 value:
                   cik: '0001128928'
-                  search_universe: 'org'
               'Scenario 4: Website ':
-                description: Website<br/><b>search universe</b> is mandatory
+                description: Website
                 value:
-                  website: '1010data.com'  
-                  search_universe: 'org'
+                  website: 'www.flowersfoods.com'
               'Scenario 5: EIN ':
                 description: EIN.
                 value:
                   ein: '570384104'
-                  search_universe: 'org'
-              'Scenario 6: LinkedIn URL ':
+              'Scenario 6: LinkedIn URL':
                 description: LinkedIn URL.
                 value:
-                  linkedin_url: ''
-                  search_universe: 'org'
+                  linkedin_url: 'www.linkedin.com/flowers'
               'Scenario 7: Name ':
                 description: Company name (fuzzy search)
                 value:
-                  name: 'Flower'
-                  search_universe: 'org'
-              'Scenario 8: Name, Website':
+                  company_name: 'Flower'
+              'Scenario 8: Email ':
+                description: Email
+                value:
+                  email: 'joe@www.flowersfoods.com'
+              'Scenario 9: BQ ID ':
+                description: BQ ID
+                value:
+                  bq_id: '100003273517'
+              'Scenario 10: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
-                  name: 'Flower'
-                  website: 'flowersfoods.com'
-                  search_universe: 'org'
-              'Scenario 8: Name, Address':
+                  company_name: 'Flower'
+                  website: 'www.flowersfoods.com'
+              'Scenario 11: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
-                  name: 'Flower'
+                  company_name: 'Flower'
                   website: '1919 Flowers Cir'
-                  search_universe: 'org'
       responses:
         '200':
           description: Successful Operation
-          # content:
-          #   application/json:              
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_append_org_res_200'          
         '400':
           description: Bad Request
-          # content:
-          #   application/json:              
-              # examples:
-              #   Bad Request, example 1:
-              #     value:
-              #       message: Invalid request body
-              #   Bad Request, example 2:
-              #     value:
-              #       message: Requested page (27) cannot be bigger than totalPages (22)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: Invalid search parameters
+                    
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []
   /bq-append/le:
@@ -582,81 +660,95 @@ paths:
         here</a> to download the list of IRS industries, which is the primary
         industry classification system used by BQ.<br><br>The average response
         time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: company_name
+          in: query
+          description: Legal name of the Legal Entity.
+          schema:
+            type: string
+            example: "FLOWERS FOODS INC"
+        - name: ein
+          in: query
+          description: Unique number issued by the IRS given to the Organization.
+          schema:
+            type: string
+            example: "570384104"        
+        - name: website
+          in: query
+          description: Link to the Organization's primary website.
+          schema:
+            type: string
+            example: "www.flowersfoods.com"                        
+        - name: address
+          in: query
+          description: Address of Legal Entity.
+          schema:
+            type: string
+            example: "Apple Park Way Cupertino"
+        - name: email
+          in: query
+          description: Email of Organization.
+          schema:
+            type: string
+            example: "joe@www.flowersfoods.com"
       requestBody:
         required: true
-        description: Operation requires authorization header.
         content:
           application/json:
-            # schema:
-              # $ref: '#/components/schemas/search'
             examples:
-              'Scenario 1: Ticker ':
-                description: Ticker.
-                value:
-                    ticker: 'MSFT'
-                    
-              'Scenario 2: LEI ':
-                description: LEI.
-                value:
-                  lei: '7YNCQQNDK8FBM9BBTK25'
-                  search_universe: 'org'
-              'Scenario 3: CIK ':
-                description: CIK
-                value:
-                  cik: '0001128928'
-                  search_universe: 'org'
-              'Scenario 4: Website ':
-                description: Website<br/><b>search universe</b> is mandatory
-                value:
-                  website: '1010data.com'  
-                  search_universe: 'org'
-              'Scenario 5: EIN ':
-                description: EIN.
-                value:
-                  ein: '570384104'
-                  search_universe: 'org'
-              'Scenario 6: LinkedIn URL ':
-                description: LinkedIn URL.
-                value:
-                  linkedin_url: ''
-                  search_universe: 'org'
-              'Scenario 7: Name ':
+              'Scenario 1: Name ':
                 description: Company name (fuzzy search)
                 value:
-                  company_name: 'Flower'
-                  search_universe: 'org'
-              'Scenario 8: Name, Website':
+                  company_name: 'Flower' 
+              'Scenario 2: EIN ':
+                description: EIN.
+                value:
+                  ein: '570384104'                                         
+              'Scenario 3: Website ':
+                description: Website
+                value:
+                  website: 'www.flowersfoods.com'              
+              'Scenario 4: Email ':
+                description: Email
+                value:
+                  email: 'joe@www.flowersfoods.com'              
+              'Scenario 5: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
-                  name: 'Flower'
-                  website: 'flowersfoods.com'
-                  search_universe: 'org'
-              'Scenario 8: Name, Address':
+                  company_name: 'Flower'
+                  website: 'www.flowersfoods.com'
+              'Scenario 6: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
-                  name: 'Flower'
+                  company_name: 'Flower'
                   website: '1919 Flowers Cir'
-                  search_universe: 'org'
       responses:
         '200':
           description: Successful Operation
-          # content:
-          #   application/json:              
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_append_le_res_200'          
         '400':
           description: Bad Request
-          # content:
-          #   application/json:              
-              # examples:
-              #   Bad Request, example 1:
-              #     value:
-              #       message: Invalid request body
-              #   Bad Request, example 2:
-              #     value:
-              #       message: Requested page (27) cannot be bigger than totalPages (22)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: Invalid search parameters
+                    
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []
   /extraction_api/firmographics:
@@ -938,7 +1030,7 @@ components:
               properties:
                 totalCount:
                   type: integer
-                  example: 10
+                  example: 1
             coverage:
               type: object
               properties:
@@ -1085,6 +1177,1770 @@ components:
                   bq_employment_range:
                     type: string
                     example: 500 - 10,000
+        status:
+          type: integer
+          example: 200
+    search_le_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 1
+            coverage:
+              type: object
+              properties:
+                coverage:
+                  type: integer
+                  example: 100
+                documents:
+                  type: integer
+                  example: 101316736
+                full:
+                  type: string
+                  example: 'true'
+                nodes:
+                  type: integer
+                  example: 10
+                results:
+                  type: integer
+                  example: 1
+                resultsFull:
+                  type: integer
+                  example: 1
+            children:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_organization_id
+                  - bq_organization_name
+                  - bq_organization_legal_name
+                  - bq_organization_active_indicator
+                  - bq_organization_address1_line_1
+                  - bq_organization_address1_city
+                  - bq_organization_address1_state
+                  - bq_organization_address1_state_name
+                  - bq_organization_address1_county_name
+                  - bq_organization_address1_country
+                  - bq_organization_address1_zip5
+                  - bq_organization_address_summary
+                  - bq_organization_website
+                  - bq_organization_ein
+                  - bq_organization_naics_sector_name
+                  - bq_legal_entity_id
+                  - bq_legal_entity_name
+                  - bq_legal_entity_address1_line_1
+                  - bq_legal_entity_address1_city
+                  - bq_legal_entity_address1_state
+                  - bq_legal_entity_address1_zip5
+                  - bq_organization_linkedin_url
+                  - bq_tickers_related
+                  - bq_match_types
+                  - bq_revenue_range
+                  - bq_employment_range
+                properties:
+                  bq_organization_id:
+                    type: string
+                    example: '100029332766'
+                  bq_organization_name:
+                    type: string
+                    example: FLOWER CITY GROUP, INC.
+                  bq_organization_legal_name:
+                    type: string
+                    example: FLOWER CITY GROUP, INC
+                  bq_organization_active_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_address1_line_1:
+                    type: string
+                    example: 1725 Mount Read Blvd
+                  bq_organization_address1_city:
+                    type: string
+                    example: Rochester
+                  bq_organization_address1_state:
+                    type: string
+                    example: NY
+                  bq_organization_address1_state_name:
+                    type: string
+                    example: New York
+                  bq_organization_address1_county_name:
+                    type: string
+                    example: Monroe County
+                  bq_organization_address1_country:
+                    type: string
+                    example: United States
+                  bq_organization_address1_zip5:
+                    type: string
+                    example: '14606'
+                  bq_organization_address_summary:
+                    type: string
+                    example: 1725 Mount Read Blvd, Rochester, New York NY, 14606
+                  bq_organization_website:
+                    type: string
+                    format: url
+                    example: https://www.flowercitygroup.com
+                  bq_organization_ein:
+                    type: string
+                    example: '203200871'
+                  bq_organization_naics_sector_name:
+                    type: string
+                    example: Information
+                  bq_legal_entity_id:
+                    type: string
+                    example: BQ_US_NY_3233604
+                  bq_legal_entity_name:
+                    type: string
+                    example: FLOWER CITY GROUP, INC
+                  bq_legal_entity_address1_line_1:
+                    type: string
+                    example: 1725 Mount Read Blvd
+                  bq_legal_entity_address1_city:
+                    type: string
+                    example: Rochester
+                  bq_legal_entity_address1_state:
+                    type: string
+                    example: NY
+                  bq_legal_entity_address1_zip5:
+                    type: string
+                    example: '14606'
+                  bq_organization_linkedin_url:
+                    type: string
+                    format: url
+                    example: https://www.linkedin.com/company/flower-city-group/
+                  bq_tickers_related:
+                    type: array
+                  bq_match_types:
+                    type: string
+                    example: Name Only
+                  bq_revenue_range:
+                    type: string
+                    example: < $100 Million
+                  bq_employment_range:
+                    type: string
+                    example: < 500
+        status:
+          type: integer
+          example: 200
+    search_officers_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 1
+            coverage:
+              type: object
+              properties:
+                coverage:
+                  type: integer
+                  example: 100
+                documents:
+                  type: integer
+                  example: 101316736
+                full:
+                  type: string
+                  example: 'true'
+                nodes:
+                  type: integer
+                  example: 10
+                results:
+                  type: integer
+                  example: 1
+                resultsFull:
+                  type: integer
+                  example: 1
+            children:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_officer_id
+                  - bq_legal_entity_officer_id
+                  - bq_officer_full_name
+                  - bq_officer_position
+                  - bq_officer_person_or_company
+                  - bq_legal_entity_id
+                  - bq_legal_entity_name
+                  - bq_legal_entity_address1_line_1
+                  - bq_legal_entity_address1_city
+                  - bq_legal_entity_address1_state
+                  - bq_legal_entity_address1_zip5
+                  - bq_organization_id
+                  - bq_organization_name
+                  - bq_organization_address1_state_name
+                  - bq_organization_address1_state
+                  - bq_organization_naics_sector_name
+                  - bq_organization_active_indicator
+                  - bq_revenue_range
+                  - bq_employment_range
+                  - bq_match_types
+                properties:
+                  bq_officer_id:
+                    type: string
+                    example: BQ_OFF_1015464458
+                  bq_legal_entity_officer_id:
+                    type: string
+                    example: BQ_US_CA_2503946_OFF0001
+                  bq_officer_full_name:
+                    type: string
+                    example: ELON MUSK
+                  bq_officer_position:
+                    type: string
+                    example: chief executive officer
+                  bq_officer_person_or_company:
+                    type: string
+                    example: Person
+                  bq_legal_entity_id:
+                    type: string
+                    example: BQ_US_CA_2503946
+                  bq_legal_entity_name:
+                    type: string
+                    example: BFR INTERNATIONAL CORP
+                  bq_legal_entity_address1_line_1:
+                    type: string
+                    example: 1310 E Grand Ave
+                  bq_legal_entity_address1_city:
+                    type: string
+                    example: El Segundo
+                  bq_legal_entity_address1_state:
+                    type: string
+                    example: CA
+                  bq_legal_entity_address1_zip5:
+                    type: string
+                    example: '90245'
+                  bq_organization_id:
+                    type: string
+                    example: '100017177469'
+                  bq_organization_name:
+                    type: string
+                    example: BFR INTERNATIONAL CORP
+                  bq_organization_address1_state_name:
+                    type: string
+                    example: California
+                  bq_organization_address1_state:
+                    type: string
+                    example: CA
+                  bq_organization_naics_sector_name:
+                    type: string
+                    example: Wholesale Trade
+                  bq_organization_active_indicator:
+                    type: integer
+                    example: 0
+                  bq_revenue_range:
+                    type: string
+                    example: < $100 Million
+                  bq_employment_range:
+                    type: string
+                    example: < 500
+                  bq_match_types:
+                    type: string
+                    example: Name Only
+        status:
+          type: integer
+          example: 200
+    search_append_org_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 10
+            coverage:
+              type: object
+              properties:
+                coverage:
+                  type: integer
+                  example: 100
+                documents:
+                  type: integer
+                  example: 101316736
+                full:
+                  type: string
+                  example: 'true'
+                nodes:
+                  type: integer
+                  example: 10
+                results:
+                  type: integer
+                  example: 1
+                resultsFull:
+                  type: integer
+                  example: 1
+            children:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_organization_id
+                  - bq_organization_structure
+                  - bq_organization_name
+                  - bq_organization_legal_name
+                  - bq_organization_jurisdiction_code
+                  - bq_organization_company_number
+                  - bq_organization_lfo
+                  - bq_organization_date_founded
+                  - bq_organization_active_indicator
+                  - bq_organization_address1_type
+                  - bq_organization_address1_valid_indicator
+                  - bq_organization_address1_line_1
+                  - bq_organization_address1_city
+                  - bq_organization_address1_state
+                  - bq_organization_address1_state_name
+                  - bq_organization_address1_county_fips
+                  - bq_organization_address1_county_name
+                  - bq_organization_address1_country
+                  - bq_organization_address1_zip5
+                  - bq_organization_address1_latitude
+                  - bq_organization_address1_longitude
+                  - bq_organization_address1_rdi
+                  - bq_organization_address1_cbsa_name
+                  - bq_organization_address1_cbsa_code
+                  - bq_organization_address1_location
+                  - bq_organization_address_summary
+                  - bq_legal_entity_address_summary
+                  - bq_organization_valuation
+                  - bq_organization_website
+                  - bq_organization_ein
+                  - bq_organization_cik
+                  - bq_organization_lei
+                  - bq_organization_nonprofit_indicator
+                  - bq_organization_public_indicator
+                  - bq_organization_de_ultimate_parent_indicator
+                  - bq_organization_irs_industry_name
+                  - bq_organization_subsector_code
+                  - bq_organization_subsector_name
+                  - bq_organization_naics_code
+                  - bq_organization_naics_name
+                  - bq_organization_naics_sector_code
+                  - bq_organization_naics_sector_name
+                  - bq_organization_company_type
+                  - bq_organization_legal_address1_type
+                  - bq_organization_legal_address1_valid_indicator
+                  - bq_organization_legal_address1_line_1
+                  - bq_organization_legal_address1_city
+                  - bq_organization_legal_address1_state
+                  - bq_organization_legal_address1_zip5
+                  - bq_organization_legal_address1_zip_type
+                  - bq_organization_legal_address1_summary
+                  - bq_organization_legal_address1_rdi
+                  - bq_score
+                  - bq_sp500_indicator
+                  - bq_legal_entity_id
+                  - bq_legal_entity_name
+                  - bq_legal_entity_jurisdiction_code
+                  - bq_legal_entity_parent_status
+                  - bq_legal_entity_immediate_children_ids
+                  - bq_legal_entity_immediate_children_count
+                  - bq_legal_entity_children_ids
+                  - bq_legal_entity_children_count
+                  - bq_legal_entity_immediate_establishment_ids
+                  - bq_legal_entity_immediate_establishment_count
+                  - bq_legal_entity_irs_taxlien_indicator
+                  - bq_legal_entity_address1_type
+                  - bq_legal_entity_address1_valid_indicator
+                  - bq_legal_entity_address1_line_1
+                  - bq_legal_entity_address1_city
+                  - bq_legal_entity_address1_state
+                  - bq_legal_entity_address1_state_name
+                  - bq_legal_entity_address1_county_fips
+                  - bq_legal_entity_address1_county_name
+                  - bq_legal_entity_address1_zip5
+                  - bq_legal_entity_address1_latitude
+                  - bq_legal_entity_address1_longitude
+                  - bq_legal_entity_address1_rdi
+                  - bq_legal_entity_current_status
+                  - bq_legal_entity_active_indicator
+                  - bq_organization_linkedin_url
+                  - bq_organization_crunchbase_url
+                  - extracted_on
+                  - bq_organization_irs_industry_code
+                  - bq_organization_sector_code
+                  - bq_organization_sector_name
+                  - bq_organization_year_founded
+                  - bq_business_code
+                  - bq_public_indicator
+                  - bq_industry_name
+                  - bq_confidence_score
+                  - bq_organization_ofac_indicator
+                  - bq_organization_irs_taxlien_indicator
+                  - bq_employment_mr
+                  - bq_revenue_mr
+                  - bq_ebitda_mr
+                  - bq_cor_mr
+                  - bq_net_income_mr
+                  - bq_gross_profit_mr
+                  - bq_total_assets_mr
+                  - bq_payroll_mr
+                  - bq_operating_expenses_mr
+                  - bq_operating_income_mr
+                  - bq_tax_and_interest_mr
+                  - bq_gross_profit_margin_mr
+                  - bq_ebitda_margin_mr
+                  - bq_asset_turnover_mr
+                  - bq_net_profit_margin_mr
+                  - bq_return_on_assets_mr
+                  - bq_return_on_sales_mr
+                  - bq_revenue_mr_per_emp
+                  - bq_ebitda_mr_per_emp
+                  - bq_cor_mr_per_emp
+                  - bq_net_income_mr_per_emp
+                  - bq_gross_profit_mr_per_emp
+                  - bq_total_assets_mr_per_emp
+                  - bq_payroll_mr_per_emp
+                  - bq_operating_expenses_mr_per_emp
+                  - bq_operating_income_mr_per_emp
+                  - bq_tax_and_interest_mr_per_emp
+                  - bq_revenue_growth_yoy_mr
+                  - bq_employment_growth_yoy_mr
+                  - bq_revenue_growth_quarterly_yoy_mr
+                  - bq_employment_growth_quarterly_yoy_mr
+                  - bq_revenue_growth_qoq_mr
+                  - bq_tickers_related
+                  - bq_organization_eins_related
+                  - bq_current_assets_mr
+                  - bq_cash_mr
+                  - bq_trade_notes_and_accounts_receivable_mr
+                  - bq_inventories_mr
+                  - bq_other_current_assets_mr
+                  - bq_non_current_assets_mr
+                  - bq_other_investments_mr
+                  - bq_intangible_assets_amortizable_mr
+                  - bq_other_non_current_assets_mr
+                  - bq_total_liabilities_and_equity_mr
+                  - bq_current_liabilities_mr
+                  - bq_accounts_payable_mr
+                  - bq_other_current_liabilities_mr
+                  - bq_non_current_liabilities_mr
+                  - bq_other_non_current_liabilities_mr
+                  - bq_shareholders_equity_mr
+                  - bq_less_allowance_for_bad_debts_mr
+                  - bq_us_government_obligations_mr
+                  - bq_tax_exempt_securities_mr
+                  - bq_loans_to_shareholders_mr
+                  - bq_mortgage_and_real_estate_loans_mr
+                  - bq_buildings_and_other_depreciable_assets_mr
+                  - bq_less_accumulated_depreciation_mr
+                  - bq_depletable_assets_mr
+                  - bq_less_accumulated_depletion_mr
+                  - bq_land_mr
+                  - bq_less_accumulated_amortization_mr
+                  - bq_loans_from_shareholders_mr
+                  - bq_match_types
+                properties:
+                  bq_organization_id:
+                    type: string
+                    example: '100003273517'
+                  bq_organization_structure:
+                    type: string
+                    example: Multi-entity U.S. organization
+                  bq_organization_name:
+                    type: string
+                    example: FLOWERS FOODS INC
+                  bq_organization_legal_name:
+                    type: string
+                    example: FLOWERS FOODS, INC
+                  bq_organization_jurisdiction_code:
+                    type: string
+                    example: US_GA
+                  bq_organization_company_number:
+                    type: string
+                    example: '0046273'
+                  bq_organization_lfo:
+                    type: string
+                    example: Corporation
+                  bq_organization_date_founded:
+                    type: string
+                    example: '2000-10-19'
+                  bq_organization_active_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_address1_type:
+                    type: string
+                    example: Registered
+                  bq_organization_address1_valid_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_address1_line_1:
+                    type: string
+                    example: 1919 Flowers Cir
+                  bq_organization_address1_city:
+                    type: string
+                    example: Thomasville
+                  bq_organization_address1_state:
+                    type: string
+                    example: GA
+                  bq_organization_address1_state_name:
+                    type: string
+                    example: Georgia
+                  bq_organization_address1_county_fips:
+                    type: string
+                    example: '13275'
+                  bq_organization_address1_county_name:
+                    type: string
+                    example: Thomas County
+                  bq_organization_address1_country:
+                    type: string
+                    example: United States
+                  bq_organization_address1_zip5:
+                    type: string
+                    example: '31757'
+                  bq_organization_address1_latitude:
+                    type: number
+                    example: 30.81085968017578
+                  bq_organization_address1_longitude:
+                    type: number
+                    example: -83.93624877929688
+                  bq_organization_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_organization_address1_cbsa_name:
+                    type: string
+                    example: Thomasville, GA
+                  bq_organization_address1_cbsa_code:
+                    type: string
+                    example: '45620'
+                  bq_organization_address1_location:
+                    type: object
+                    required:
+                      - lat
+                      - lng
+                    properties:
+                      lat:
+                        type: number
+                        example: 30.81086
+                      lng:
+                        type: number
+                        example: -83.936249
+                  bq_organization_address_summary:
+                    type: string
+                    example: 1919 Flowers Cir, Thomasville, Georgia GA, 31757
+                  bq_legal_entity_address_summary:
+                    type: string
+                    example: 1919 Flowers Cir, Thomasville, Georgia GA, 31757
+                  bq_organization_valuation:
+                    anyOf:
+                      - type: integer
+                        example: 2401249695
+                      - type: number
+                        example: 116749674.99
+                  bq_organization_website:
+                    type: string
+                    example: https://flowersfoods.com/
+                  bq_organization_ein:
+                    type: string
+                    example: '582582379'
+                  bq_organization_cik:
+                    type: string
+                    example: '0001128928'
+                  bq_organization_lei:
+                    type: string
+                    example: 7YNCQQNDK8FBM9BBTK25
+                  bq_organization_nonprofit_indicator:
+                    type: integer
+                    example: 0
+                  bq_organization_public_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_de_ultimate_parent_indicator:
+                    type: integer
+                    example: 0
+                  bq_organization_irs_industry_name:
+                    type: string
+                    example: Bakeries, Tortilla & Dry Pasta Manufacturing
+                  bq_organization_subsector_code:
+                    type: string
+                    example: '3110'
+                  bq_organization_subsector_name:
+                    type: string
+                    example: Food Manufacturing
+                  bq_organization_naics_code:
+                    type: string
+                    example: '311811'
+                  bq_organization_naics_name:
+                    type: string
+                    example: Retail Bakeries
+                  bq_organization_naics_sector_code:
+                    type: string
+                    example: 31-33
+                  bq_organization_naics_sector_name:
+                    type: string
+                    example: Manufacturing
+                  bq_organization_company_type:
+                    type: string
+                    example: Employer
+                  bq_organization_legal_address1_type:
+                    type: string
+                    example: Registered
+                  bq_organization_legal_address1_valid_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_legal_address1_line_1:
+                    type: string
+                    example: 1919 Flowers Cir
+                  bq_organization_legal_address1_city:
+                    type: string
+                    example: Thomasville
+                  bq_organization_legal_address1_state:
+                    type: string
+                    example: GA
+                  bq_organization_legal_address1_zip5:
+                    type: string
+                    example: '31757'
+                  bq_organization_legal_address1_zip_type:
+                    type: string
+                    example: Standard
+                  bq_organization_legal_address1_summary:
+                    type: string
+                    example: Match-Mailable
+                  bq_organization_legal_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_score:
+                    anyOf:
+                      - type: integer
+                        example: 544
+                      - type: string
+                        example: ''
+                  bq_sp500_indicator:
+                    type: integer
+                    example: 0
+                  bq_legal_entity_id:
+                    type: string
+                    example: BQ_US_GA_0046273
+                  bq_legal_entity_name:
+                    type: string
+                    example: FLOWERS FOODS, INC
+                  bq_legal_entity_jurisdiction_code:
+                    type: string
+                    example: US_GA
+                  bq_legal_entity_parent_status:
+                    type: string
+                    example: Ultimate Parent
+                  bq_legal_entity_immediate_children_ids:
+                    type: string
+                    example: BQ_US_FL_F22000001446
+                  bq_legal_entity_immediate_children_count:
+                    anyOf:
+                      - type: integer
+                        example: 1
+                      - type: string
+                        example: ''
+                  bq_legal_entity_children_ids:
+                    type: string
+                    example: BQ_US_FL_F22000001446
+                  bq_legal_entity_children_count:
+                    anyOf:
+                      - type: integer
+                        example: 1
+                      - type: string
+                        example: ''
+                  bq_legal_entity_immediate_establishment_ids:
+                    type: string
+                    example: BQ_US_GA_0046273_0000001
+                  bq_legal_entity_immediate_establishment_count:
+                    anyOf:
+                      - type: integer
+                        example: 1
+                      - type: string
+                        example: ''
+                  bq_legal_entity_irs_taxlien_indicator:
+                    anyOf:
+                      - type: boolean
+                        example: false
+                      - type: string
+                        example: ''
+                  bq_legal_entity_address1_type:
+                    type: string
+                    example: Registered
+                  bq_legal_entity_address1_valid_indicator:
+                    anyOf:
+                      - type: boolean
+                        example: true
+                      - type: string
+                        example: ''
+                  bq_legal_entity_address1_line_1:
+                    type: string
+                    example: 1919 Flowers Cir
+                  bq_legal_entity_address1_city:
+                    type: string
+                    example: Thomasville
+                  bq_legal_entity_address1_state:
+                    type: string
+                    example: GA
+                  bq_legal_entity_address1_state_name:
+                    type: string
+                    example: Georgia
+                  bq_legal_entity_address1_county_fips:
+                    type: string
+                    example: '13275'
+                  bq_legal_entity_address1_county_name:
+                    type: string
+                    example: Thomas County
+                  bq_legal_entity_address1_zip5:
+                    type: string
+                    example: '31757'
+                  bq_legal_entity_address1_latitude:
+                    anyOf:
+                      - type: number
+                        example: 30.81086
+                      - type: string
+                        example: ''
+                  bq_legal_entity_address1_longitude:
+                    anyOf:
+                      - type: number
+                        example: -83.93625
+                      - type: string
+                        example: ''
+                  bq_legal_entity_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_legal_entity_current_status:
+                    type: string
+                    example: Active/Compliance
+                  bq_legal_entity_active_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_linkedin_url:
+                    type: string
+                    example: https://www.linkedin.com/company/flowers-foods/
+                  bq_organization_crunchbase_url:
+                    type: string
+                    example: https://www.crunchbase.com/organization/flowers-foods
+                  extracted_on:
+                    type: string
+                    example: '2024-07-22 07:45:03'
+                  bq_organization_irs_industry_code:
+                    type: string
+                    example: '311800'
+                  bq_organization_sector_code:
+                    type: string
+                    example: '31'
+                  bq_organization_sector_name:
+                    type: string
+                    example: Manufacturing
+                  bq_organization_year_founded:
+                    anyOf:
+                      - type: integer
+                        example: 2000
+                      - type: string
+                        example: ''
+                  bq_business_code:
+                    type: string
+                    example: '311800'
+                  bq_public_indicator:
+                    type: integer
+                    example: 1
+                  bq_industry_name:
+                    type: string
+                    example: Bakeries, Tortilla & Dry Pasta Manufacturing
+                  bq_confidence_score:
+                    anyOf:
+                      - type: integer
+                        example: 100
+                      - type: string
+                        example: ''
+                  bq_organization_ofac_indicator:
+                    type: integer
+                    example: 0
+                  bq_organization_irs_taxlien_indicator:
+                    type: integer
+                    example: 0
+                  bq_employment_mr:
+                    type: integer
+                    example: 9670
+                  bq_revenue_mr:
+                    type: integer
+                    example: 5133155000
+                  bq_ebitda_mr:
+                    type: integer
+                    example: 356519000
+                  bq_cor_mr:
+                    type: integer
+                    example: 2628470000
+                  bq_net_income_mr:
+                    type: integer
+                    example: 125749000
+                  bq_gross_profit_mr:
+                    type: integer
+                    example: 2504685000
+                  bq_total_assets_mr:
+                    anyOf:
+                      - type: integer
+                        example: 3429166000
+                      - type: string
+                        example: ''
+                  bq_payroll_mr:
+                    type: integer
+                    example: 190889701
+                  bq_operating_expenses_mr:
+                    type: integer
+                    example: 2324035000
+                  bq_operating_income_mr:
+                    type: integer
+                    example: 180650000
+                  bq_tax_and_interest_mr:
+                    type: integer
+                    example: 54901000
+                  bq_gross_profit_margin_mr:
+                    type: number
+                    example: 0.48794260060333267
+                  bq_ebitda_margin_mr:
+                    type: number
+                    example: 0.0694541661025237
+                  bq_asset_turnover_mr:
+                    type: number
+                    example: 1.496910619083474
+                  bq_net_profit_margin_mr:
+                    type: number
+                    example: 0.024497409487927016
+                  bq_return_on_assets_mr:
+                    type: number
+                    example: 0.0366704324025142
+                  bq_return_on_sales_mr:
+                    type: number
+                    example: 0.03519278104791303
+                  bq_revenue_mr_per_emp:
+                    type: integer
+                    example: 530832
+                  bq_ebitda_mr_per_emp:
+                    type: integer
+                    example: 36868
+                  bq_cor_mr_per_emp:
+                    type: integer
+                    example: 271816
+                  bq_net_income_mr_per_emp:
+                    type: integer
+                    example: 13004
+                  bq_gross_profit_mr_per_emp:
+                    type: integer
+                    example: 259016
+                  bq_total_assets_mr_per_emp:
+                    type: integer
+                    example: 354619
+                  bq_payroll_mr_per_emp:
+                    type: integer
+                    example: 19740
+                  bq_operating_expenses_mr_per_emp:
+                    type: integer
+                    example: 240334
+                  bq_operating_income_mr_per_emp:
+                    type: integer
+                    example: 18681
+                  bq_tax_and_interest_mr_per_emp:
+                    type: integer
+                    example: 5677
+                  bq_revenue_growth_yoy_mr:
+                    anyOf:
+                      - type: number
+                        example: 0.008313968449152664
+                      - type: string
+                        example: ''
+                  bq_employment_growth_yoy_mr:
+                    anyOf:
+                      - type: number
+                        example: 0.1366080661840745
+                      - type: integer
+                        example: 0
+                  bq_revenue_growth_quarterly_yoy_mr:
+                    type: number
+                    example: 0.02758240018038527
+                  bq_employment_growth_quarterly_yoy_mr:
+                    type: number
+                    example: 0.13940139401394025
+                  bq_revenue_growth_qoq_mr:
+                    type: number
+                    example: -0.10537521777864745
+                  bq_tickers_related:
+                    type: array
+                  bq_organization_eins_related:
+                    type: array
+                  bq_current_assets_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 373143008
+                  bq_cash_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 126807000
+                  bq_trade_notes_and_accounts_receivable_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 20419000
+                  bq_inventories_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 191334000
+                  bq_other_current_assets_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 34583000
+                  bq_non_current_assets_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 678286976
+                  bq_other_investments_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 0
+                  bq_intangible_assets_amortizable_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 293264000
+                  bq_other_non_current_assets_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 25739000
+                  bq_total_liabilities_and_equity_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1051430008
+                  bq_current_liabilities_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 220260992
+                  bq_accounts_payable_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 52588000
+                  bq_other_current_liabilities_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 141914000
+                  bq_non_current_liabilities_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 359326016
+                  bq_other_non_current_liabilities_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 55605000
+                  bq_shareholders_equity_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 471843000
+                  bq_less_allowance_for_bad_debts_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 333638
+                  bq_us_government_obligations_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 725301
+                  bq_tax_exempt_securities_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 870361
+                  bq_loans_to_shareholders_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 546393
+                  bq_mortgage_and_real_estate_loans_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1112128
+                  bq_buildings_and_other_depreciable_assets_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 24645724
+                  bq_less_accumulated_depreciation_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 13824235
+                  bq_depletable_assets_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 323968
+                  bq_less_accumulated_depletion_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 212755
+                  bq_land_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1431260
+                  bq_less_accumulated_amortization_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 3031758
+                  bq_loans_from_shareholders_mr:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 2625589
+                  bq_match_types:
+                    type: string
+                    example: Name Only
+        status:
+          type: integer
+          example: 200
+    search_append_le_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 10
+            coverage:
+              type: object
+              properties:
+                coverage:
+                  type: integer
+                  example: 100
+                documents:
+                  type: integer
+                  example: 101316736
+                full:
+                  type: string
+                  example: 'true'
+                nodes:
+                  type: integer
+                  example: 10
+                results:
+                  type: integer
+                  example: 1
+                resultsFull:
+                  type: integer
+                  example: 1
+            children:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_organization_id
+                  - bq_organization_structure
+                  - bq_organization_name
+                  - bq_organization_legal_name
+                  - bq_organization_jurisdiction_code
+                  - bq_organization_company_number
+                  - bq_organization_lfo
+                  - bq_organization_date_founded
+                  - bq_organization_active_indicator
+                  - bq_organization_address1_type
+                  - bq_organization_address1_valid_indicator
+                  - bq_organization_address1_line_1
+                  - bq_organization_address1_city
+                  - bq_organization_address1_state
+                  - bq_organization_address1_state_name
+                  - bq_organization_address1_county_fips
+                  - bq_organization_address1_county_name
+                  - bq_organization_address1_country
+                  - bq_organization_address1_zip5
+                  - bq_organization_address1_latitude
+                  - bq_organization_address1_longitude
+                  - bq_organization_address1_rdi
+                  - bq_organization_address1_cbsa_name
+                  - bq_organization_address1_cbsa_code
+                  - bq_organization_address1_location
+                  - bq_organization_address_summary
+                  - bq_legal_entity_address_summary
+                  - bq_organization_valuation
+                  - bq_organization_website
+                  - bq_organization_ein
+                  - bq_organization_nonprofit_indicator
+                  - bq_organization_public_indicator
+                  - bq_organization_de_ultimate_parent_indicator
+                  - bq_organization_irs_industry_name
+                  - bq_organization_subsector_code
+                  - bq_organization_subsector_name
+                  - bq_organization_naics_code
+                  - bq_organization_naics_name
+                  - bq_organization_naics_sector_code
+                  - bq_organization_naics_sector_name
+                  - bq_organization_company_type
+                  - bq_organization_legal_address1_type
+                  - bq_organization_legal_address1_valid_indicator
+                  - bq_organization_legal_address1_line_1
+                  - bq_organization_legal_address1_city
+                  - bq_organization_legal_address1_state
+                  - bq_organization_legal_address1_zip5
+                  - bq_organization_legal_address1_zip_type
+                  - bq_organization_legal_address1_summary
+                  - bq_organization_legal_address1_rdi
+                  - bq_score
+                  - bq_sp500_indicator
+                  - bq_legal_entity_id
+                  - bq_legal_entity_name
+                  - bq_legal_entity_jurisdiction_code
+                  - bq_legal_entity_parent_status
+                  - bq_legal_entity_immediate_establishment_ids
+                  - bq_legal_entity_immediate_establishment_count
+                  - bq_legal_entity_irs_taxlien_indicator
+                  - bq_legal_entity_address1_type
+                  - bq_legal_entity_address1_valid_indicator
+                  - bq_legal_entity_address1_line_1
+                  - bq_legal_entity_address1_city
+                  - bq_legal_entity_address1_state
+                  - bq_legal_entity_address1_state_name
+                  - bq_legal_entity_address1_county_fips
+                  - bq_legal_entity_address1_county_name
+                  - bq_legal_entity_address1_zip5
+                  - bq_legal_entity_address1_latitude
+                  - bq_legal_entity_address1_longitude
+                  - bq_legal_entity_address1_rdi
+                  - bq_legal_entity_current_status
+                  - bq_legal_entity_active_indicator
+                  - bq_organization_linkedin_url
+                  - extracted_on
+                  - bq_organization_irs_industry_code
+                  - bq_organization_sector_code
+                  - bq_organization_sector_name
+                  - bq_organization_year_founded
+                  - bq_business_code
+                  - bq_public_indicator
+                  - bq_industry_name
+                  - bq_confidence_score
+                  - bq_organization_ofac_indicator
+                  - bq_organization_irs_taxlien_indicator
+                  - bq_employment_mr
+                  - bq_revenue_mr
+                  - bq_ebitda_mr
+                  - bq_cor_mr
+                  - bq_net_income_mr
+                  - bq_gross_profit_mr
+                  - bq_total_assets_mr
+                  - bq_payroll_mr
+                  - bq_operating_expenses_mr
+                  - bq_operating_income_mr
+                  - bq_tax_and_interest_mr
+                  - bq_gross_profit_margin_mr
+                  - bq_ebitda_margin_mr
+                  - bq_asset_turnover_mr
+                  - bq_net_profit_margin_mr
+                  - bq_return_on_assets_mr
+                  - bq_return_on_sales_mr
+                  - bq_revenue_mr_per_emp
+                  - bq_ebitda_mr_per_emp
+                  - bq_cor_mr_per_emp
+                  - bq_net_income_mr_per_emp
+                  - bq_gross_profit_mr_per_emp
+                  - bq_total_assets_mr_per_emp
+                  - bq_payroll_mr_per_emp
+                  - bq_operating_expenses_mr_per_emp
+                  - bq_operating_income_mr_per_emp
+                  - bq_tax_and_interest_mr_per_emp
+                  - bq_revenue_growth_yoy_mr
+                  - bq_employment_growth_yoy_mr
+                  - bq_revenue_growth_quarterly_yoy_mr
+                  - bq_employment_growth_quarterly_yoy_mr
+                  - bq_revenue_growth_qoq_mr
+                  - bq_current_assets_mr
+                  - bq_cash_mr
+                  - bq_trade_notes_and_accounts_receivable_mr
+                  - bq_less_allowance_for_bad_debts_mr
+                  - bq_inventories_mr
+                  - bq_us_government_obligations_mr
+                  - bq_tax_exempt_securities_mr
+                  - bq_other_current_assets_mr
+                  - bq_non_current_assets_mr
+                  - bq_loans_to_shareholders_mr
+                  - bq_mortgage_and_real_estate_loans_mr
+                  - bq_other_investments_mr
+                  - bq_buildings_and_other_depreciable_assets_mr
+                  - bq_less_accumulated_depreciation_mr
+                  - bq_depletable_assets_mr
+                  - bq_less_accumulated_depletion_mr
+                  - bq_land_mr
+                  - bq_intangible_assets_amortizable_mr
+                  - bq_less_accumulated_amortization_mr
+                  - bq_other_non_current_assets_mr
+                  - bq_total_liabilities_and_equity_mr
+                  - bq_current_liabilities_mr
+                  - bq_accounts_payable_mr
+                  - bq_other_current_liabilities_mr
+                  - bq_non_current_liabilities_mr
+                  - bq_loans_from_shareholders_mr
+                  - bq_other_non_current_liabilities_mr
+                  - bq_shareholders_equity_mr
+                  - bq_tickers_related
+                  - bq_organization_eins_related
+                  - bq_legal_entity_immediate_children_ids
+                  - bq_legal_entity_immediate_children_count
+                  - bq_legal_entity_children_ids
+                  - bq_legal_entity_children_count
+                  - bq_organization_crunchbase_url
+                  - bq_match_types
+                properties:
+                  bq_organization_id:
+                    type: string
+                    example: '100029332766'
+                  bq_organization_structure:
+                    type: string
+                    example: Single-entity organization
+                  bq_organization_name:
+                    type: string
+                    example: FLOWER CITY GROUP, INC.
+                  bq_organization_legal_name:
+                    type: string
+                    example: FLOWER CITY GROUP, INC
+                  bq_organization_jurisdiction_code:
+                    type: string
+                    example: US_NY
+                  bq_organization_company_number:
+                    type: string
+                    example: '3233604'
+                  bq_organization_lfo:
+                    type: string
+                    example: Corporation
+                  bq_organization_date_founded:
+                    type: string
+                    format: date
+                    example: '2005-07-21'
+                  bq_organization_active_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_address1_type:
+                    type: string
+                    example: Registered
+                  bq_organization_address1_valid_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_address1_line_1:
+                    type: string
+                    example: 1725 Mount Read Blvd
+                  bq_organization_address1_city:
+                    type: string
+                    example: Rochester
+                  bq_organization_address1_state:
+                    type: string
+                    example: NY
+                  bq_organization_address1_state_name:
+                    type: string
+                    example: New York
+                  bq_organization_address1_county_fips:
+                    type: string
+                    example: '36055'
+                  bq_organization_address1_county_name:
+                    type: string
+                    example: Monroe County
+                  bq_organization_address1_country:
+                    type: string
+                    example: United States
+                  bq_organization_address1_zip5:
+                    type: string
+                    example: '14606'
+                  bq_organization_address1_latitude:
+                    type: number
+                    example: 43.186279296875
+                  bq_organization_address1_longitude:
+                    type: number
+                    example: -77.66063690185547
+                  bq_organization_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_organization_address1_cbsa_name:
+                    type: string
+                    example: Rochester, NY
+                  bq_organization_address1_cbsa_code:
+                    type: string
+                    example: '40380'
+                  bq_organization_address1_location:
+                    type: object
+                    required:
+                      - lat
+                      - lng
+                    properties:
+                      lat:
+                        type: number
+                        example: 43.186279
+                      lng:
+                        type: number
+                        example: -77.660637
+                  bq_organization_address_summary:
+                    type: string
+                    example: 1725 Mount Read Blvd, Rochester, New York NY, 14606
+                  bq_legal_entity_address_summary:
+                    type: string
+                    example: 1725 Mount Read Blvd, Rochester, New York NY, 14606
+                  bq_organization_valuation:
+                    type: number
+                    example: 41115422.17
+                  bq_organization_website:
+                    type: string
+                    format: url
+                    example: https://www.flowercitygroup.com
+                  bq_organization_ein:
+                    type: string
+                    example: '203200871'
+                  bq_organization_nonprofit_indicator:
+                    type: integer
+                    example: 0
+                  bq_organization_public_indicator:
+                    type: integer
+                    example: 0
+                  bq_organization_de_ultimate_parent_indicator:
+                    type: integer
+                    example: 0
+                  bq_organization_irs_industry_name:
+                    type: string
+                    example: Other Publishers
+                  bq_organization_subsector_code:
+                    type: string
+                    example: '5110'
+                  bq_organization_subsector_name:
+                    type: string
+                    example: Publishing Industries (except Internet)
+                  bq_organization_naics_code:
+                    type: string
+                    example: '511191'
+                  bq_organization_naics_name:
+                    type: string
+                    example: Greeting Card Publishers
+                  bq_organization_naics_sector_code:
+                    type: string
+                    example: '51'
+                  bq_organization_naics_sector_name:
+                    type: string
+                    example: Information
+                  bq_organization_company_type:
+                    type: string
+                    example: Employer
+                  bq_organization_legal_address1_type:
+                    type: string
+                    example: Registered
+                  bq_organization_legal_address1_valid_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_legal_address1_line_1:
+                    type: string
+                    example: 1725 Mount Read Blvd
+                  bq_organization_legal_address1_city:
+                    type: string
+                    example: Rochester
+                  bq_organization_legal_address1_state:
+                    type: string
+                    example: NY
+                  bq_organization_legal_address1_zip5:
+                    type: string
+                    example: '14606'
+                  bq_organization_legal_address1_zip_type:
+                    type: string
+                    example: Standard
+                  bq_organization_legal_address1_summary:
+                    type: string
+                    example: Match-Mailable
+                  bq_organization_legal_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_score:
+                    anyOf:
+                      - type: integer
+                        example: 882
+                      - type: string
+                        example: ''
+                  bq_sp500_indicator:
+                    type: integer
+                    example: 0
+                  bq_legal_entity_id:
+                    type: string
+                    example: BQ_US_NY_3233604
+                  bq_legal_entity_name:
+                    type: string
+                    example: FLOWER CITY GROUP, INC
+                  bq_legal_entity_jurisdiction_code:
+                    type: string
+                    example: US_NY
+                  bq_legal_entity_parent_status:
+                    type: string
+                    example: Sole
+                  bq_legal_entity_immediate_establishment_ids:
+                    type: string
+                    example: BQ_US_NY_3233604_0000002;BQ_US_NY_3233604_0000001
+                  bq_legal_entity_immediate_establishment_count:
+                    type: integer
+                    example: 2
+                  bq_legal_entity_irs_taxlien_indicator:
+                    type: integer
+                    example: 0
+                  bq_legal_entity_address1_type:
+                    type: string
+                    example: Registered
+                  bq_legal_entity_address1_valid_indicator:
+                    type: integer
+                    example: 1
+                  bq_legal_entity_address1_line_1:
+                    type: string
+                    example: 1725 Mount Read Blvd
+                  bq_legal_entity_address1_city:
+                    type: string
+                    example: Rochester
+                  bq_legal_entity_address1_state:
+                    type: string
+                    example: NY
+                  bq_legal_entity_address1_state_name:
+                    type: string
+                    example: New York
+                  bq_legal_entity_address1_county_fips:
+                    type: string
+                    example: '36055'
+                  bq_legal_entity_address1_county_name:
+                    type: string
+                    example: Monroe County
+                  bq_legal_entity_address1_zip5:
+                    type: string
+                    example: '14606'
+                  bq_legal_entity_address1_latitude:
+                    type: number
+                    example: 43.18628
+                  bq_legal_entity_address1_longitude:
+                    type: number
+                    example: -77.66064
+                  bq_legal_entity_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_legal_entity_current_status:
+                    type: string
+                    example: Active
+                  bq_legal_entity_active_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_linkedin_url:
+                    type: string
+                    format: url
+                    example: https://www.linkedin.com/company/flower-city-group/
+                  extracted_on:
+                    type: string
+                    example: '2024-07-22 07:45:03'
+                  bq_organization_irs_industry_code:
+                    type: string
+                    example: '511190'
+                  bq_organization_sector_code:
+                    type: string
+                    example: '51'
+                  bq_organization_sector_name:
+                    type: string
+                    example: Information
+                  bq_organization_year_founded:
+                    type: integer
+                    example: 2005
+                  bq_business_code:
+                    type: string
+                    example: '511190'
+                  bq_public_indicator:
+                    type: integer
+                    example: 0
+                  bq_industry_name:
+                    type: string
+                    example: Other Publishers
+                  bq_confidence_score:
+                    anyOf:
+                      - type: integer
+                        example: 100
+                      - type: string
+                        example: ''
+                  bq_organization_ofac_indicator:
+                    type: integer
+                    example: 0
+                  bq_organization_irs_taxlien_indicator:
+                    type: integer
+                    example: 0
+                  bq_employment_mr:
+                    type: integer
+                    example: 265
+                  bq_revenue_mr:
+                    type: integer
+                    example: 55384288
+                  bq_ebitda_mr:
+                    type: integer
+                    example: 11172166
+                  bq_cor_mr:
+                    type: integer
+                    example: 21421046
+                  bq_net_income_mr:
+                    type: integer
+                    example: 4887367
+                  bq_gross_profit_mr:
+                    type: integer
+                    example: 33963242
+                  bq_total_assets_mr:
+                    type: integer
+                    example: 64688718
+                  bq_payroll_mr:
+                    type: integer
+                    example: 11833674
+                  bq_operating_expenses_mr:
+                    type: integer
+                    example: 25644128
+                  bq_operating_income_mr:
+                    type: integer
+                    example: 8319114
+                  bq_tax_and_interest_mr:
+                    type: integer
+                    example: 3431747
+                  bq_gross_profit_margin_mr:
+                    type: number
+                    example: 0.6132288276415145
+                  bq_ebitda_margin_mr:
+                    type: number
+                    example: 0.20172085628328382
+                  bq_asset_turnover_mr:
+                    type: number
+                    example: 0.8645055389317362
+                  bq_net_profit_margin_mr:
+                    type: number
+                    example: 0.08824464801280825
+                  bq_return_on_assets_mr:
+                    type: number
+                    example: 0.07628798698815416
+                  bq_return_on_sales_mr:
+                    type: number
+                    example: 0.15020711289093397
+                  bq_revenue_mr_per_emp:
+                    type: integer
+                    example: 208997
+                  bq_ebitda_mr_per_emp:
+                    type: integer
+                    example: 42159
+                  bq_cor_mr_per_emp:
+                    type: integer
+                    example: 80834
+                  bq_net_income_mr_per_emp:
+                    type: integer
+                    example: 18442
+                  bq_gross_profit_mr_per_emp:
+                    type: integer
+                    example: 128163
+                  bq_total_assets_mr_per_emp:
+                    type: integer
+                    example: 241753
+                  bq_payroll_mr_per_emp:
+                    type: integer
+                    example: 44655
+                  bq_operating_expenses_mr_per_emp:
+                    type: integer
+                    example: 96770
+                  bq_operating_income_mr_per_emp:
+                    type: integer
+                    example: 31392
+                  bq_tax_and_interest_mr_per_emp:
+                    type: integer
+                    example: 12949
+                  bq_revenue_growth_yoy_mr:
+                    type: number
+                    example: -0.021387391020936786
+                  bq_employment_growth_yoy_mr:
+                    type: number
+                    example: -0.17358490566037732
+                  bq_revenue_growth_quarterly_yoy_mr:
+                    type: number
+                    example: -0.08304029881014352
+                  bq_employment_growth_quarterly_yoy_mr:
+                    type: number
+                    example: -0.13492063492063489
+                  bq_revenue_growth_qoq_mr:
+                    type: number
+                    example: 0.02188997941808779
+                  bq_current_assets_mr:
+                    type: integer
+                    example: 29074344
+                  bq_cash_mr:
+                    type: integer
+                    example: 9383099
+                  bq_trade_notes_and_accounts_receivable_mr:
+                    type: integer
+                    example: 9890905
+                  bq_less_allowance_for_bad_debts_mr:
+                    type: integer
+                    example: 481931
+                  bq_inventories_mr:
+                    type: integer
+                    example: 4699635
+                  bq_us_government_obligations_mr:
+                    type: integer
+                    example: 242583
+                  bq_tax_exempt_securities_mr:
+                    type: integer
+                    example: 291099
+                  bq_other_current_assets_mr:
+                    type: integer
+                    example: 5048954
+                  bq_non_current_assets_mr:
+                    type: integer
+                    example: 35614376
+                  bq_loans_to_shareholders_mr:
+                    type: integer
+                    example: 750389
+                  bq_mortgage_and_real_estate_loans_mr:
+                    type: integer
+                    example: 1468434
+                  bq_other_investments_mr:
+                    type: integer
+                    example: 12539908
+                  bq_buildings_and_other_depreciable_assets_mr:
+                    type: integer
+                    example: 20878284
+                  bq_less_accumulated_depreciation_mr:
+                    type: integer
+                    example: 13921012
+                  bq_depletable_assets_mr:
+                    type: integer
+                    example: 213473
+                  bq_less_accumulated_depletion_mr:
+                    type: integer
+                    example: 139081
+                  bq_land_mr:
+                    type: integer
+                    example: 1474903
+                  bq_intangible_assets_amortizable_mr:
+                    type: integer
+                    example: 20202287
+                  bq_less_accumulated_amortization_mr:
+                    type: integer
+                    example: 9852092
+                  bq_other_non_current_assets_mr:
+                    type: integer
+                    example: 1998881
+                  bq_total_liabilities_and_equity_mr:
+                    type: integer
+                    example: 89134585
+                  bq_current_liabilities_mr:
+                    type: integer
+                    example: 18843824
+                  bq_accounts_payable_mr:
+                    type: integer
+                    example: 5521182
+                  bq_other_current_liabilities_mr:
+                    type: integer
+                    example: 10621887
+                  bq_non_current_liabilities_mr:
+                    type: integer
+                    example: 21399028
+                  bq_loans_from_shareholders_mr:
+                    type: integer
+                    example: 2192948
+                  bq_other_non_current_liabilities_mr:
+                    type: integer
+                    example: 3855447
+                  bq_shareholders_equity_mr:
+                    type: integer
+                    example: 24445867
+                  bq_tickers_related:
+                    type: array
+                  bq_organization_eins_related:
+                    type: array
+                  bq_legal_entity_immediate_children_ids:
+                    type: string
+                    example: ''
+                  bq_legal_entity_immediate_children_count:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1
+                  bq_legal_entity_children_ids:
+                    type: string
+                    example: ''
+                  bq_legal_entity_children_count:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1
+                  bq_organization_crunchbase_url:
+                    type: string
+                    example: ''
+                  bq_match_types:
+                    type: string
+                    example: Name Only
         status:
           type: integer
           example: 200
