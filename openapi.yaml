@@ -144,7 +144,7 @@ paths:
           description: Email of Organization.
           schema:
             type: string
-            example: "joe@www.flowersfoods.com"
+            example: "joe@flowersfoods.com"
         - name: bq_id
           in: query
           description: Unique ID assigned by BQ to the Organization.
@@ -187,7 +187,7 @@ paths:
               'Scenario 8: Email ':
                 description: Email
                 value:
-                  email: 'joe@www.flowersfoods.com'
+                  email: 'joe@flowersfoods.com'
               'Scenario 9: BQ ID ':
                 description: BQ ID
                 value:
@@ -296,7 +296,7 @@ paths:
           description: Email of Organization.
           schema:
             type: string
-            example: "joe@www.flowersfoods.com"
+            example: "joe@flowersfoods.com"
       requestBody:
         required: true
         content:
@@ -317,7 +317,7 @@ paths:
               'Scenario 4: Email ':
                 description: Email
                 value:
-                  email: 'joe@www.flowersfoods.com'              
+                  email: 'joe@flowersfoods.com'              
               'Scenario 5: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
@@ -538,7 +538,7 @@ paths:
           description: Email of Organization.
           schema:
             type: string
-            example: "joe@www.flowersfoods.com"
+            example: "joe@flowersfoods.com"
         - name: bq_id
           in: query
           description: Unique ID assigned by BQ to the Organization.
@@ -581,7 +581,7 @@ paths:
               'Scenario 8: Email ':
                 description: Email
                 value:
-                  email: 'joe@www.flowersfoods.com'
+                  email: 'joe@flowersfoods.com'
               'Scenario 9: BQ ID ':
                 description: BQ ID
                 value:
@@ -690,7 +690,7 @@ paths:
           description: Email of Organization.
           schema:
             type: string
-            example: "joe@www.flowersfoods.com"
+            example: "joe@flowersfoods.com"
       requestBody:
         required: true
         content:
@@ -711,7 +711,7 @@ paths:
               'Scenario 4: Email ':
                 description: Email
                 value:
-                  email: 'joe@www.flowersfoods.com'              
+                  email: 'joe@flowersfoods.com'              
               'Scenario 5: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
@@ -788,19 +788,42 @@ paths:
       parameters:
         - name: bq_id
           in: query
-          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          description: Unique ID assigned by BQ to the Organization.
           schema:
             type: integer
             example: 100003273517
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_firmographics_res_200'          
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: No input value
+        '422':
+          description: Search Parameter Missing 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_422'              
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []
   /extraction_api/mr:
@@ -2944,6 +2967,368 @@ components:
         status:
           type: integer
           example: 200
+    search_firmographics_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 1
+            records:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_id
+                  - bq_cik
+                  - bq_company_ein
+                  - bq_company_eins_related
+                  - bq_company_ein_formatted
+                  - bq_company_eins_related_formatted
+                  - bq_ticker
+                  - bq_ticker_parent
+                  - bq_tickers_related
+                  - bq_company_name
+                  - bq_company_legal_name
+                  - bq_company_type
+                  - bq_company_structure
+                  - bq_company_lfo
+                  - bq_website
+                  - bq_company_linkedin_url
+                  - bq_company_crunchbase_url
+                  - bq_company_phone
+                  - bq_company_phone_formatted
+                  - bq_company_active_indicator
+                  - bq_company_legal_entity_indicator
+                  - bq_public_indicator
+                  - bq_public_reit_indicator
+                  - bq_public_spac_indicator
+                  - bq_company_capital_markets_universe_indicator
+                  - bq_no_benefits_indicator
+                  - bq_non_profit_indicator
+                  - bq_non_company_indicator
+                  - bq_company_us_only_indicator
+                  - bq_sp500_indicator
+                  - bq_company_delaware_stock_filings_indicator
+                  - bq_company_sba_ppp_loan_indicator
+                  - bq_company_sba_7a_loan_indicator
+                  - bq_company_sba_504_loan_indicator
+                  - bq_company_ofac_indicator
+                  - bq_company_irs_taxlien_indicator
+                  - bq_confidence_score
+                  - bq_irs_industry_code
+                  - bq_irs_industry_name
+                  - bq_irs_industry_codes_all
+                  - bq_irs_industry_names_all
+                  - bq_irs_subsector_code
+                  - bq_irs_subsector_name
+                  - bq_irs_sector_code
+                  - bq_irs_sector_name
+                  - bq_naics_code
+                  - bq_naics_name
+                  - bq_naics_codes_all
+                  - bq_naics_names_all
+                  - bq_naics_sector_code
+                  - bq_naics_sector_name
+                  - bq_sic_code
+                  - bq_sic_name
+                  - bq_sic_codes_all
+                  - bq_sic_names_all
+                  - bq_sic_sector_code
+                  - bq_sic_sector_name
+                  - bq_sic_sector_codes_all
+                  - bq_sic_sector_names_all
+                  - bq_year_founded
+                  - bq_company_date_dissoluted
+                  - bq_company_address1_line_1
+                  - bq_company_address1_line_2
+                  - bq_company_address1_city
+                  - bq_company_address1_state
+                  - bq_company_address1_state_name
+                  - bq_company_address1_county_fips
+                  - bq_company_address1_county_name
+                  - bq_company_address1_country
+                  - bq_company_address1_zip5
+                  - bq_company_address1_zip9
+                  - bq_company_address1_zip_type
+                  - bq_company_address1_latitude
+                  - bq_company_address1_longitude
+                  - bq_company_address1_rdi
+                  - bq_company_address1_summary
+                  - bq_company_address1_cbsa_code
+                  - bq_company_address1_cbsa_name
+                  - bq_company_address1_cbsa_type
+                  - bq_company_address1_secondary_number
+                  - bq_company_address1_dpv_match_code
+                  - bq_company_address1_building_default_indicator
+                  - bq_company_address1_congressional_district
+                properties:
+                  bq_id:
+                    type: integer
+                    example: 100003273517
+                  bq_cik:
+                    type: string
+                    example: '0001128928'
+                  bq_company_ein:
+                    type: string
+                    example: '582582379'
+                  bq_company_eins_related:
+                    type: string
+                    example: '158258237'
+                  bq_company_ein_formatted:
+                    type: string
+                    example: 58-2582379
+                  bq_company_eins_related_formatted:
+                    type: string
+                    example: 15-8258237
+                  bq_ticker:
+                    type: string
+                    example: FLO
+                  bq_ticker_parent:
+                    type: string
+                    example: ''
+                  bq_tickers_related:
+                    type: string
+                    example: ''
+                  bq_company_name:
+                    type: string
+                    example: FLOWERS FOODS INC
+                  bq_company_legal_name:
+                    type: string
+                    example: FLOWERS FOODS, INC
+                  bq_company_type:
+                    type: string
+                    example: Employer
+                  bq_company_structure:
+                    type: string
+                    example: Multi-entity U.S. organization
+                  bq_company_lfo:
+                    type: string
+                    example: Corporation
+                  bq_website:
+                    type: string
+                    format: url
+                    example: https://flowersfoods.com/
+                  bq_company_linkedin_url:
+                    type: string
+                    format: url
+                    example: https://www.linkedin.com/company/flowers-foods/
+                  bq_company_crunchbase_url:
+                    type: string
+                    format: url
+                    example: https://www.crunchbase.com/organization/flowers-foods
+                  bq_company_phone:
+                    type: string
+                    example: '2292269110'
+                  bq_company_phone_formatted:
+                    type: string
+                    example: (229) 226-9110
+                  bq_company_active_indicator:
+                    type: integer
+                    example: 1
+                  bq_company_legal_entity_indicator:
+                    type: integer
+                    example: 1
+                  bq_public_indicator:
+                    type: integer
+                    example: 1
+                  bq_public_reit_indicator:
+                    type: integer
+                    example: 0
+                  bq_public_spac_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_capital_markets_universe_indicator:
+                    type: integer
+                    example: 1
+                  bq_no_benefits_indicator:
+                    type: integer
+                    example: 0
+                  bq_non_profit_indicator:
+                    type: integer
+                    example: 0
+                  bq_non_company_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_us_only_indicator:
+                    type: integer
+                    example: 1
+                  bq_sp500_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_delaware_stock_filings_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_sba_ppp_loan_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_sba_7a_loan_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_sba_504_loan_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_ofac_indicator:
+                    type: integer
+                    example: 0
+                  bq_company_irs_taxlien_indicator:
+                    type: integer
+                    example: 0
+                  bq_confidence_score:
+                    type: integer
+                    example: 100
+                  bq_irs_industry_code:
+                    type: string
+                    example: '311800'
+                  bq_irs_industry_name:
+                    type: string
+                    example: Bakeries, Tortilla & Dry Pasta Manufacturing
+                  bq_irs_industry_codes_all:
+                    type: string
+                    example: '311800'
+                  bq_irs_industry_names_all:
+                    type: string
+                    example: Bakeries, Tortilla & Dry Pasta Manufacturing
+                  bq_irs_subsector_code:
+                    type: string
+                    example: '3110'
+                  bq_irs_subsector_name:
+                    type: string
+                    example: Food Manufacturing
+                  bq_irs_sector_code:
+                    type: string
+                    example: '31'
+                  bq_irs_sector_name:
+                    type: string
+                    example: Manufacturing
+                  bq_naics_code:
+                    type: string
+                    example: '311811'
+                  bq_naics_name:
+                    type: string
+                    example: Retail Bakeries
+                  bq_naics_codes_all:
+                    type: string
+                    example: '311811'
+                  bq_naics_names_all:
+                    type: string
+                    example: Retail Bakeries
+                  bq_naics_sector_code:
+                    type: string
+                    example: 31-33
+                  bq_naics_sector_name:
+                    type: string
+                    example: Manufacturing
+                  bq_sic_code:
+                    type: string
+                    example: '5461'
+                  bq_sic_name:
+                    type: string
+                    example: Retail Bakeries
+                  bq_sic_codes_all:
+                    type: string
+                    example: '5461'
+                  bq_sic_names_all:
+                    type: string
+                    example: Retail Bakeries
+                  bq_sic_sector_code:
+                    type: string
+                    example: '54'
+                  bq_sic_sector_name:
+                    type: string
+                    example: Food stores
+                  bq_sic_sector_codes_all:
+                    type: string
+                    example: '54'
+                  bq_sic_sector_names_all:
+                    type: string
+                    example: Food stores
+                  bq_year_founded:
+                    type: string
+                    example: ''
+                  bq_company_date_dissoluted:
+                    type: string
+                    example: ''
+                  bq_company_address1_line_1:
+                    type: string
+                    example: 1919 Flowers Cir
+                  bq_company_address1_line_2:
+                    type: string
+                    example: ''
+                  bq_company_address1_city:
+                    type: string
+                    example: Thomasville
+                  bq_company_address1_state:
+                    type: string
+                    example: GA
+                  bq_company_address1_state_name:
+                    type: string
+                    example: Georgia
+                  bq_company_address1_county_fips:
+                    type: string
+                    example: '13275'
+                  bq_company_address1_county_name:
+                    type: string
+                    example: Thomas County
+                  bq_company_address1_country:
+                    type: string
+                    example: United States
+                  bq_company_address1_zip5:
+                    type: string
+                    example: '31757'
+                  bq_company_address1_zip9:
+                    type: string
+                    example: 31757-1137
+                  bq_company_address1_zip_type:
+                    type: string
+                    example: Standard
+                  bq_company_address1_latitude:
+                    type: number
+                    example: 30.81086
+                  bq_company_address1_longitude:
+                    type: number
+                    example: -83.93625
+                  bq_company_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_company_address1_summary:
+                    type: string
+                    example: Match-Mailable
+                  bq_company_address1_cbsa_code:
+                    type: string
+                    example: '45620'
+                  bq_company_address1_cbsa_name:
+                    type: string
+                    example: Thomasville, GA
+                  bq_company_address1_cbsa_type:
+                    type: string
+                    example: Micro
+                  bq_company_address1_secondary_number:
+                    type: string
+                    example: ''
+                  bq_company_address1_dpv_match_code:
+                    type: string
+                    example: 'Yes'
+                  bq_company_address1_building_default_indicator:
+                    type: string
+                    example: 'No'
+                  bq_company_address1_congressional_district:
+                    type: string
+                    example: GA02
+        status:
+          type: integer
+          example: 200
 
 
     response_200:
@@ -2957,6 +3342,12 @@ components:
         message:
           type: string
           example: Invalid request body
+    response_422:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Search Parameter Missing
     response_401:
       type: object
       properties:
