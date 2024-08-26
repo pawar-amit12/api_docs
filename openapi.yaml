@@ -117,7 +117,7 @@ paths:
             example: "www.flowersfoods.com"
         - name: ein
           in: query
-          description: Unique number issued by the IRS given to the Organization.
+          description: Unique number issued by the IRS given to the Organization which is used to identify the business and certain other related entities.
           schema:
             type: string
             example: "570384104"
@@ -275,7 +275,7 @@ paths:
             example: "FLOWERS FOODS INC"
         - name: ein
           in: query
-          description: Unique number issued by the IRS given to the Organization.
+          description: Unique number issued by the IRS given to the Organization which is used to identify the business and certain other related entities.
           schema:
             type: string
             example: "570384104"        
@@ -511,7 +511,7 @@ paths:
             example: "www.flowersfoods.com"
         - name: ein
           in: query
-          description: Unique number issued by the IRS given to the Organization.
+          description: Unique number issued by the IRS given to the Organization which is used to identify the business and certain other related entities.
           schema:
             type: string
             example: "570384104"
@@ -669,7 +669,7 @@ paths:
             example: "FLOWERS FOODS INC"
         - name: ein
           in: query
-          description: Unique number issued by the IRS given to the Organization.
+          description: Unique number issued by the IRS given to the Organization which is used to identify the business and certain other related entities.
           schema:
             type: string
             example: "570384104"        
@@ -863,19 +863,42 @@ paths:
       parameters:
         - name: bq_id
           in: query
-          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          description: Unique ID assigned by BQ to the Organization.
           schema:
             type: integer
             example: 100003273517
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_mr_res_200'          
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: No input value
+        '422':
+          description: Search Parameter Missing 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_422'              
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []  
   /extraction_api/ts:
@@ -915,19 +938,42 @@ paths:
       parameters:
         - name: bq_id
           in: query
-          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          description: Unique ID assigned by BQ to the Organization.
           schema:
             type: integer
             example: 100003273517
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_ts_res_200'          
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: No input value
+        '422':
+          description: Search Parameter Missing 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_422'              
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []
   /extraction_api/tsq:
@@ -967,19 +1013,42 @@ paths:
       parameters:
         - name: bq_id
           in: query
-          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          description: Unique ID assigned by BQ to the Organization.
           schema:
             type: integer
             example: 100003273517
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_tsq_res_200'          
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: No input value
+        '422':
+          description: Search Parameter Missing 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_422'              
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []
   /extraction_api/tsm:
@@ -1019,19 +1088,42 @@ paths:
       parameters:
         - name: bq_id
           in: query
-          description: The starting date to retrieve future operating hours from. Defaults to today's date.
+          description: Unique ID assigned by BQ to the Organization.
           schema:
             type: integer
             example: 100003273517
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_tsm_res_200'          
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: No input value
+        '422':
+          description: Search Parameter Missing 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_422'              
         '401':
           description: Authorization header is missing or invalid
-          # content:
-          #   application/json:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
       security:
         - basicAuth: []  
 components:
@@ -3326,6 +3418,1017 @@ components:
                   bq_company_address1_congressional_district:
                     type: string
                     example: GA02
+        status:
+          type: integer
+          example: 200
+    search_mr_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 1
+            records:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_id
+                  - bq_employment_mr
+                  - bq_revenue_mr
+                  - bq_ebitda_mr
+                  - bq_cor_mr
+                  - bq_net_income_mr
+                  - bq_gross_profit_mr
+                  - bq_total_assets_mr
+                  - bq_payroll_mr
+                  - bq_operating_expenses_mr
+                  - bq_operating_income_mr
+                  - bq_tax_and_interest_mr
+                  - bq_gross_profit_margin_mr
+                  - bq_ebitda_margin_mr
+                  - bq_asset_turnover_mr
+                  - bq_net_profit_margin_mr
+                  - bq_return_on_assets_mr
+                  - bq_return_on_sales_mr
+                  - bq_revenue_mr_per_emp
+                  - bq_ebitda_mr_per_emp
+                  - bq_cor_mr_per_emp
+                  - bq_net_income_mr_per_emp
+                  - bq_gross_profit_mr_per_emp
+                  - bq_total_assets_mr_per_emp
+                  - bq_payroll_mr_per_emp
+                  - bq_operating_expenses_mr_per_emp
+                  - bq_operating_income_mr_per_emp
+                  - bq_tax_and_interest_mr_per_emp
+                  - bq_report_date_mr
+                  - bq_revenue_growth_yoy_mr
+                  - bq_employment_growth_yoy_mr
+                  - bq_revenue_growth_quarterly_yoy_mr
+                  - bq_employment_growth_quarterly_yoy_mr
+                  - bq_employment_growth_monthly_yoy_mr
+                  - bq_revenue_growth_qoq_mr
+                  - bq_employment_growth_qoq_mr
+                  - bq_employment_growth_mom_mr
+                  - bq_current_assets_mr
+                  - bq_cash_mr
+                  - bq_trade_notes_and_accounts_receivable_mr
+                  - bq_less_allowance_for_bad_debts_mr
+                  - bq_inventories_mr
+                  - bq_us_government_obligations_mr
+                  - bq_tax_exempt_securities_mr
+                  - bq_other_current_assets_mr
+                  - bq_non_current_assets_mr
+                  - bq_loans_to_shareholders_mr
+                  - bq_mortgage_and_real_estate_loans_mr
+                  - bq_other_investments_mr
+                  - bq_buildings_and_other_depreciable_assets_mr
+                  - bq_less_accumulated_depreciation_mr
+                  - bq_depletable_assets_mr
+                  - bq_less_accumulated_depletion_mr
+                  - bq_land_mr
+                  - bq_intangible_assets_amortizable_mr
+                  - bq_less_accumulated_amortization_mr
+                  - bq_other_non_current_assets_mr
+                  - bq_total_liabilities_and_equity_mr
+                  - bq_current_liabilities_mr
+                  - bq_accounts_payable_mr
+                  - bq_other_current_liabilities_mr
+                  - bq_non_current_liabilities_mr
+                  - bq_loans_from_shareholders_mr
+                  - bq_other_non_current_liabilities_mr
+                  - bq_shareholders_equity_mr
+                  - bq_short_term_debt_mr
+                  - bq_long_term_debt_mr
+                  - bq_total_debt_mr
+                  - bq_current_ratio_mr
+                  - bq_debt_to_equity_ratio_mr
+                  - bq_quick_ratio_mr
+                properties:
+                  bq_id:
+                    type: integer
+                    example: 100003273517
+                  bq_employment_mr:
+                    type: integer
+                    example: 9670
+                  bq_revenue_mr:
+                    type: integer
+                    example: 5133155000
+                  bq_ebitda_mr:
+                    type: integer
+                    example: 356519000
+                  bq_cor_mr:
+                    type: integer
+                    example: 2628470000
+                  bq_net_income_mr:
+                    type: integer
+                    example: 125749000
+                  bq_gross_profit_mr:
+                    type: integer
+                    example: 2504685000
+                  bq_total_assets_mr:
+                    type: integer
+                    example: 3429166000
+                  bq_payroll_mr:
+                    type: integer
+                    example: 190889701
+                  bq_operating_expenses_mr:
+                    type: integer
+                    example: 2324035000
+                  bq_operating_income_mr:
+                    type: integer
+                    example: 180650000
+                  bq_tax_and_interest_mr:
+                    type: integer
+                    example: 54901000
+                  bq_gross_profit_margin_mr:
+                    type: number
+                    example: 0.4879426
+                  bq_ebitda_margin_mr:
+                    type: number
+                    example: 0.06945416
+                  bq_asset_turnover_mr:
+                    type: number
+                    example: 1.4969106
+                  bq_net_profit_margin_mr:
+                    type: number
+                    example: 0.02449741
+                  bq_return_on_assets_mr:
+                    type: number
+                    example: 0.03667043
+                  bq_return_on_sales_mr:
+                    type: number
+                    example: 0.03519278
+                  bq_revenue_mr_per_emp:
+                    type: integer
+                    example: 530832
+                  bq_ebitda_mr_per_emp:
+                    type: integer
+                    example: 36868
+                  bq_cor_mr_per_emp:
+                    type: integer
+                    example: 271816
+                  bq_net_income_mr_per_emp:
+                    type: integer
+                    example: 13004
+                  bq_gross_profit_mr_per_emp:
+                    type: integer
+                    example: 259016
+                  bq_total_assets_mr_per_emp:
+                    type: integer
+                    example: 354619
+                  bq_payroll_mr_per_emp:
+                    type: integer
+                    example: 19740
+                  bq_operating_expenses_mr_per_emp:
+                    type: integer
+                    example: 240334
+                  bq_operating_income_mr_per_emp:
+                    type: integer
+                    example: 18681
+                  bq_tax_and_interest_mr_per_emp:
+                    type: integer
+                    example: 5677
+                  bq_report_date_mr:
+                    type: string
+                    format: date
+                    example: '2024-04-20'
+                  bq_revenue_growth_yoy_mr:
+                    type: number
+                    example: 0.008313969
+                  bq_employment_growth_yoy_mr:
+                    type: number
+                    example: 0.13660806
+                  bq_revenue_growth_quarterly_yoy_mr:
+                    type: number
+                    example: 0.0275824
+                  bq_employment_growth_quarterly_yoy_mr:
+                    type: number
+                    example: 0.13940139
+                  bq_employment_growth_monthly_yoy_mr:
+                    type: number
+                    example: 0.14088836
+                  bq_revenue_growth_qoq_mr:
+                    type: number
+                    example: -0.105375215
+                  bq_employment_growth_qoq_mr:
+                    type: number
+                    example: -0.012049365
+                  bq_employment_growth_mom_mr:
+                    type: number
+                    example: 0.010538333
+                  bq_current_assets_mr:
+                    type: integer
+                    example: 687713000
+                  bq_cash_mr:
+                    type: integer
+                    example: 22527000
+                  bq_trade_notes_and_accounts_receivable_mr:
+                    type: integer
+                    example: 328246020
+                  bq_less_allowance_for_bad_debts_mr:
+                    type: string
+                    example: ''
+                  bq_inventories_mr:
+                    type: integer
+                    example: 184496990
+                  bq_us_government_obligations_mr:
+                    type: string
+                    example: ''
+                  bq_tax_exempt_securities_mr:
+                    type: string
+                    example: ''
+                  bq_other_current_assets_mr:
+                    type: integer
+                    example: 152443010
+                  bq_non_current_assets_mr:
+                    type: integer
+                    example: 2739240000
+                  bq_loans_to_shareholders_mr:
+                    type: string
+                    example: ''
+                  bq_mortgage_and_real_estate_loans_mr:
+                    type: string
+                    example: ''
+                  bq_other_investments_mr:
+                    type: string
+                    example: ''
+                  bq_buildings_and_other_depreciable_assets_mr:
+                    type: integer
+                    example: 1239715000
+                  bq_less_accumulated_depreciation_mr:
+                    type: integer
+                    example: 3075100000
+                  bq_depletable_assets_mr:
+                    type: string
+                    example: ''
+                  bq_less_accumulated_depletion_mr:
+                    type: string
+                    example: ''
+                  bq_land_mr:
+                    type: string
+                    example: ''
+                  bq_intangible_assets_amortizable_mr:
+                    type: integer
+                    example: 1335538000
+                  bq_less_accumulated_amortization_mr:
+                    type: string
+                    example: ''
+                  bq_other_non_current_assets_mr:
+                    type: string
+                    example: ''
+                  bq_total_liabilities_and_equity_mr:
+                    type: integer
+                    example: 2075171000
+                  bq_current_liabilities_mr:
+                    type: integer
+                    example: 659152000
+                  bq_accounts_payable_mr:
+                    type: integer
+                    example: 318600000
+                  bq_other_current_liabilities_mr:
+                    type: string
+                    example: ''
+                  bq_non_current_liabilities_mr:
+                    type: integer
+                    example: 1416019000
+                  bq_loans_from_shareholders_mr:
+                    type: string
+                    example: ''
+                  bq_other_non_current_liabilities_mr:
+                    type: integer
+                    example: 130980000
+                  bq_shareholders_equity_mr:
+                    type: integer
+                    example: 1351782000
+                  bq_short_term_debt_mr:
+                    type: string
+                    example: ''
+                  bq_long_term_debt_mr:
+                    type: integer
+                    example: 1285039000
+                  bq_total_debt_mr:
+                    type: integer
+                    example: 1285039000
+                  bq_current_ratio_mr:
+                    type: number
+                    example: 1.04333
+                  bq_debt_to_equity_ratio_mr:
+                    type: number
+                    example: 0.9506259
+                  bq_quick_ratio_mr:
+                    type: number
+                    example: 0.53215796
+        status:
+          type: integer
+          example: 200
+    search_ts_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 1
+            records:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_id
+                  - bq_employment
+                  - bq_revenue
+                  - bq_ebitda
+                  - bq_cor
+                  - bq_net_income
+                  - bq_gross_profit
+                  - bq_total_assets
+                  - bq_payroll
+                  - bq_operating_expenses
+                  - bq_operating_income
+                  - bq_tax_and_interest
+                  - bq_gross_profit_margin
+                  - bq_ebitda_margin
+                  - bq_asset_turnover
+                  - bq_net_profit_margin
+                  - bq_return_on_assets
+                  - bq_return_on_sales
+                  - bq_revenue_per_emp
+                  - bq_ebitda_per_emp
+                  - bq_cor_per_emp
+                  - bq_net_income_per_emp
+                  - bq_gross_profit_per_emp
+                  - bq_total_assets_per_emp
+                  - bq_payroll_per_emp
+                  - bq_operating_expenses_per_emp
+                  - bq_operating_income_per_emp
+                  - bq_tax_and_interest_per_emp
+                  - bq_fiscal_year_end
+                  - bq_current_assets
+                  - bq_cash
+                  - bq_trade_notes_and_accounts_receivable
+                  - bq_less_allowance_for_bad_debts
+                  - bq_inventories
+                  - bq_us_government_obligations
+                  - bq_tax_exempt_securities
+                  - bq_other_current_assets
+                  - bq_non_current_assets
+                  - bq_loans_to_shareholders
+                  - bq_mortgage_and_real_estate_loans
+                  - bq_other_investments
+                  - bq_buildings_and_other_depreciable_assets
+                  - bq_less_accumulated_depreciation
+                  - bq_depletable_assets
+                  - bq_less_accumulated_depletion
+                  - bq_land
+                  - bq_intangible_assets_amortizable
+                  - bq_less_accumulated_amortization
+                  - bq_other_non_current_assets
+                  - bq_current_liabilities
+                  - bq_accounts_payable
+                  - bq_short_term_debt
+                  - bq_other_current_liabilities
+                  - bq_non_current_liabilities
+                  - bq_loans_from_shareholders
+                  - bq_long_term_debt
+                  - bq_other_non_current_liabilities
+                  - bq_total_debt
+                  - bq_shareholders_equity
+                  - bq_total_liabilities_and_equity
+                  - bq_current_ratio
+                  - bq_quick_ratio
+                  - bq_debt_to_equity_ratio
+                  - bq_year
+                properties:
+                  bq_id:
+                    type: integer
+                    example: 100003273517
+                  bq_employment:
+                    type: integer
+                    example: 10991
+                  bq_revenue:
+                    type: integer
+                    example: 5133155000
+                  bq_ebitda:
+                    type: integer
+                    example: 337203000
+                  bq_cor:
+                    type: integer
+                    example: 2628470000
+                  bq_net_income:
+                    type: integer
+                    example: 125749000
+                  bq_gross_profit:
+                    type: integer
+                    example: 2504685000
+                  bq_total_assets:
+                    type: integer
+                    example: 3429166000
+                  bq_payroll:
+                    type: integer
+                    example: 55111774
+                  bq_operating_expenses:
+                    type: integer
+                    example: 2438728000
+                  bq_operating_income:
+                    type: integer
+                    example: 65957000
+                  bq_tax_and_interest:
+                    type: integer
+                    example: 70300000
+                  bq_gross_profit_margin:
+                    type: number
+                    example: 0.4944337266571031
+                  bq_ebitda_margin:
+                    type: number
+                    example: 0.09869940601895716
+                  bq_asset_turnover:
+                    type: number
+                    example: 0.4598255085930515
+                  bq_net_profit_margin:
+                    type: number
+                    example: 0.04632303791559964
+                  bq_return_on_assets:
+                    type: number
+                    example: 0.021300514469115815
+                  bq_return_on_sales:
+                    type: number
+                    example: 0.06440058396086296
+                  bq_revenue_per_emp:
+                    type: integer
+                    example: 143464
+                  bq_ebitda_per_emp:
+                    type: integer
+                    example: 14159
+                  bq_cor_per_emp:
+                    type: integer
+                    example: 72530
+                  bq_net_income_per_emp:
+                    type: integer
+                    example: 6645
+                  bq_gross_profit_per_emp:
+                    type: integer
+                    example: 70933
+                  bq_total_assets_per_emp:
+                    type: integer
+                    example: 311997
+                  bq_payroll_per_emp:
+                    type: integer
+                    example: 5014
+                  bq_operating_expenses_per_emp:
+                    type: integer
+                    example: 61694
+                  bq_operating_income_per_emp:
+                    type: integer
+                    example: 9239
+                  bq_tax_and_interest_per_emp:
+                    type: integer
+                    example: 2593
+                  bq_fiscal_year_end:
+                    type: string
+                    format: date
+                    example: '2024-04-20'
+                  bq_current_assets:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 687713024
+                  bq_cash:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 22527000
+                  bq_trade_notes_and_accounts_receivable:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 328246000
+                  bq_less_allowance_for_bad_debts:
+                    type: string
+                    example: ''
+                  bq_inventories:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 184497000
+                  bq_us_government_obligations:
+                    type: string
+                    example: ''
+                  bq_tax_exempt_securities:
+                    type: string
+                    example: ''
+                  bq_other_current_assets:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 152443000
+                  bq_non_current_assets:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 2739239940
+                  bq_loans_to_shareholders:
+                    type: string
+                    example: ''
+                  bq_mortgage_and_real_estate_loans:
+                    type: string
+                    example: ''
+                  bq_other_investments:
+                    type: string
+                    example: ''
+                  bq_buildings_and_other_depreciable_assets:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1239715000
+                  bq_less_accumulated_depreciation:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 3075100000
+                  bq_depletable_assets:
+                    type: string
+                    example: ''
+                  bq_less_accumulated_depletion:
+                    type: string
+                    example: ''
+                  bq_land:
+                    type: string
+                    example: ''
+                  bq_intangible_assets_amortizable:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1335538000
+                  bq_less_accumulated_amortization:
+                    type: string
+                    example: ''
+                  bq_other_non_current_assets:
+                    type: string
+                    example: ''
+                  bq_current_liabilities:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 659152000
+                  bq_accounts_payable:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 318600000
+                  bq_short_term_debt:
+                    type: string
+                    example: ''
+                  bq_other_current_liabilities:
+                    type: string
+                    example: ''
+                  bq_non_current_liabilities:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1416018940
+                  bq_loans_from_shareholders:
+                    type: string
+                    example: ''
+                  bq_long_term_debt:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1285039000
+                  bq_other_non_current_liabilities:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 130980000
+                  bq_total_debt:
+                    type: string
+                    example: ''
+                  bq_shareholders_equity:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 1351782000
+                  bq_total_liabilities_and_equity:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: integer
+                        example: 2075171000
+                  bq_current_ratio:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: number
+                        example: 1.0433299512100396
+                  bq_quick_ratio:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: number
+                        example: 0.5321579848047188
+                  bq_debt_to_equity_ratio:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: number
+                        example: 0.9506259145335565
+                  bq_year:
+                    type: integer
+                    example: 2024
+        status:
+          type: integer
+          example: 200
+    search_tsq_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 17
+            records:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_id
+                  - bq_ebitda_margin
+                  - bq_revenue_per_emp
+                  - bq_total_assets_per_emp
+                  - bq_fiscal_quarter_end
+                  - bq_revenue
+                  - bq_trade_notes_and_accounts_receivable
+                  - bq_us_government_obligations
+                  - bq_short_term_debt
+                  - bq_loans_from_shareholders
+                  - bq_long_term_debt
+                  - bq_payroll
+                  - bq_debt_to_equity_ratio
+                  - bq_operating_expenses
+                  - bq_return_on_sales
+                  - bq_operating_expenses_per_emp
+                  - bq_operating_income_per_emp
+                  - bq_quarter
+                  - bq_fiscal_year
+                  - bq_cor
+                  - bq_gross_profit
+                  - bq_cash
+                  - bq_inventories
+                  - bq_mortgage_and_real_estate_loans
+                  - bq_buildings_and_other_depreciable_assets
+                  - bq_less_accumulated_depletion
+                  - bq_less_accumulated_amortization
+                  - bq_current_liabilities
+                  - bq_other_current_liabilities
+                  - bq_non_current_liabilities
+                  - bq_ebitda_per_emp
+                  - bq_net_income_per_emp
+                  - bq_gross_profit_per_emp
+                  - bq_payroll_per_emp
+                  - bq_tax_and_interest_per_emp
+                  - bq_net_income
+                  - bq_current_assets
+                  - bq_less_allowance_for_bad_debts
+                  - bq_other_current_assets
+                  - bq_loans_to_shareholders
+                  - bq_other_investments
+                  - bq_land
+                  - bq_intangible_assets_amortizable
+                  - bq_accounts_payable
+                  - bq_shareholders_equity
+                  - bq_total_debt
+                  - bq_operating_income
+                  - bq_tax_and_interest
+                  - bq_gross_profit_margin
+                  - bq_asset_turnover
+                  - bq_net_profit_margin
+                  - bq_return_on_assets
+                  - bq_cor_per_emp
+                  - bq_year
+                  - bq_fiscal_quarter
+                  - bq_fiscal_year_end
+                  - bq_employment
+                  - bq_ebitda
+                  - bq_total_assets
+                  - bq_tax_exempt_securities
+                  - bq_non_current_assets
+                  - bq_less_accumulated_depreciation
+                  - bq_depletable_assets
+                  - bq_other_non_current_assets
+                  - bq_total_liabilities_and_equity
+                  - bq_other_non_current_liabilities
+                  - bq_current_ratio
+                  - bq_quick_ratio
+                properties:
+                  bq_id:
+                    type: integer
+                    example: 100003273517
+                  bq_ebitda_margin:
+                    type: number
+                    example: 0.09869940601895716
+                  bq_revenue_per_emp:
+                    type: integer
+                    example: 141889
+                  bq_total_assets_per_emp:
+                    type: integer
+                    example: 308572
+                  bq_fiscal_quarter_end:
+                    type: string
+                    format: date
+                    example: '2024-04-20'
+                  bq_revenue:
+                    type: integer
+                    example: 1576818000
+                  bq_trade_notes_and_accounts_receivable:
+                    type: integer
+                    example: 359481000
+                  bq_us_government_obligations:
+                    type: string
+                    example: ''
+                  bq_short_term_debt:
+                    type: string
+                    example: ''
+                  bq_loans_from_shareholders:
+                    type: string
+                    example: ''
+                  bq_long_term_debt:
+                    type: integer
+                    example: 1290970000
+                  bq_payroll:
+                    type: integer
+                    example: 55111774
+                  bq_debt_to_equity_ratio:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: number
+                        example: 0.8896005177915588
+                  bq_operating_expenses:
+                    type: integer
+                    example: 678084000
+                  bq_return_on_sales:
+                    type: number
+                    example: 0.06440058396086296
+                  bq_operating_expenses_per_emp:
+                    type: integer
+                    example: 61017
+                  bq_operating_income_per_emp:
+                    type: integer
+                    example: 9137
+                  bq_quarter:
+                    type: integer
+                    example: 1
+                  bq_fiscal_year:
+                    type: integer
+                    example: 2024
+                  bq_cor:
+                    type: integer
+                    example: 797186000
+                  bq_gross_profit:
+                    type: integer
+                    example: 779632000
+                  bq_cash:
+                    type: integer
+                    example: 15818000
+                  bq_inventories:
+                    type: integer
+                    example: 176003000
+                  bq_mortgage_and_real_estate_loans:
+                    type: string
+                    example: ''
+                  bq_buildings_and_other_depreciable_assets:
+                    type: integer
+                    example: 1253299000
+                  bq_less_accumulated_depletion:
+                    type: string
+                    example: ''
+                  bq_less_accumulated_amortization:
+                    type: string
+                    example: ''
+                  bq_current_liabilities:
+                    type: integer
+                    example: 622393984
+                  bq_other_current_liabilities:
+                    type: string
+                    example: ''
+                  bq_non_current_liabilities:
+                    type: integer
+                    example: 1430892030
+                  bq_ebitda_per_emp:
+                    type: integer
+                    example: 14004
+                  bq_net_income_per_emp:
+                    type: integer
+                    example: 6572
+                  bq_gross_profit_per_emp:
+                    type: integer
+                    example: 70154
+                  bq_payroll_per_emp:
+                    type: integer
+                    example: 4959
+                  bq_tax_and_interest_per_emp:
+                    type: integer
+                    example: 2565
+                  bq_net_income:
+                    type: integer
+                    example: 73043000
+                  bq_current_assets:
+                    type: integer
+                    example: 688403968
+                  bq_less_allowance_for_bad_debts:
+                    type: string
+                    example: ''
+                  bq_other_current_assets:
+                    type: integer
+                    example: 137102000
+                  bq_loans_to_shareholders:
+                    type: string
+                    example: ''
+                  bq_other_investments:
+                    type: string
+                    example: ''
+                  bq_land:
+                    type: string
+                    example: ''
+                  bq_intangible_assets_amortizable:
+                    type: integer
+                    example: 1327922000
+                  bq_accounts_payable:
+                    type: integer
+                    example: 303583000
+                  bq_shareholders_equity:
+                    type: integer
+                    example: 1375880000
+                  bq_total_debt:
+                    type: string
+                    example: ''
+                  bq_operating_income:
+                    type: integer
+                    example: 101548000
+                  bq_tax_and_interest:
+                    type: integer
+                    example: 34353000
+                  bq_gross_profit_margin:
+                    type: number
+                    example: 0.4944337266571031
+                  bq_asset_turnover:
+                    type: number
+                    example: 0.4598255085930515
+                  bq_net_profit_margin:
+                    type: number
+                    example: 0.04632303791559964
+                  bq_return_on_assets:
+                    type: number
+                    example: 0.021300514469115815
+                  bq_cor_per_emp:
+                    type: integer
+                    example: 71734
+                  bq_year:
+                    type: integer
+                    example: 2024
+                  bq_fiscal_quarter:
+                    type: integer
+                    example: 1
+                  bq_fiscal_year_end:
+                    type: string
+                    format: date
+                    example: '2024-12-28'
+                  bq_employment:
+                    type: integer
+                    example: 11113
+                  bq_ebitda:
+                    type: integer
+                    example: 149941000
+                  bq_total_assets:
+                    type: integer
+                    example: 3429166000
+                  bq_tax_exempt_securities:
+                    type: string
+                    example: ''
+                  bq_non_current_assets:
+                    type: integer
+                    example: 2740762110
+                  bq_less_accumulated_depreciation:
+                    type: integer
+                    example: 3145628000
+                  bq_depletable_assets:
+                    type: string
+                    example: ''
+                  bq_other_non_current_assets:
+                    type: string
+                    example: ''
+                  bq_total_liabilities_and_equity:
+                    type: integer
+                    example: 2053286000
+                  bq_other_non_current_liabilities:
+                    type: integer
+                    example: 139922000
+                  bq_current_ratio:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: number
+                        example: 1.3204721171759906
+                  bq_quick_ratio:
+                    anyOf:
+                      - type: string
+                        example: ''
+                      - type: number
+                        example: 0.7369267959363961
+        status:
+          type: integer
+          example: 200
+
+    search_tsm_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 54
+            records:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_id
+                  - bq_employment
+                  - bq_month
+                  - bq_payroll
+                  - bq_year
+                properties:
+                  bq_id:
+                    type: integer
+                    example: 100003273517
+                  bq_employment:
+                    type: integer
+                    example: 10991
+                  bq_month:
+                    type: integer
+                    example: 1
+                  bq_payroll:
+                    type: integer
+                    example: 18164013
+                  bq_year:
+                    type: integer
+                    example: 2024
         status:
           type: integer
           example: 200
