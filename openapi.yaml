@@ -1125,6 +1125,81 @@ paths:
               schema:
                 $ref: '#/components/schemas/response_401'
       security:
+        - basicAuth: []
+  /extraction_api/org_executives:
+    get:
+      summary: Org Executives
+      tags:
+        - Extraction API      
+      description: >-
+        The BQ Advanced Search API is generally suitable for clients in capital
+        markets, investment banking, consulting, private equity, and venture
+        capital. It is suitable for such purposes because the search results are
+        biased in favor of large companies as well as public companies. That is,
+        if two companies are equally matched to the search criteria entered by
+        the user, then the BQ Advanced Search API ranks higher in the results
+        the company that is larger or public. The BQ Advanced Search API is not
+        suitable for users looking for small companies, such as those with less
+        than 100 employees; such users should instead leverage the BQ Neutral
+        Search API.<br><br> The BQ Advanced Search API enables a user to find a
+        specific company. Searches can be performed using company name, address,
+        website, and other firmographic criteria. The top 10 results are
+        returned, including core firmographics (name, address, website, phone,
+        industry, etc.), employment, revenue, and payroll. The results of the BQ
+        Advanced Search API are sorted based on BQ’s proprietary match score
+        which is weighted in favor of large companies.<br><br> The drop-down
+        menu on the right provides a series of examples demonstrating how to use
+        the BQ Advanced Search API. <br><br>Please refer to <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_Search_API_Data_Dictionary.xlsx"
+        >BrightQuery_Search_API_Data_Dictionary</a> to obtain details of the
+        attributes in API response. For a complete list of all fields that BQ
+        can provide, including detailed financials, please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_data_dictionary.xlsx"
+        >click here</a>. Please <a
+        href="https://s3.us-west-1.amazonaws.com/docs.brightquery.com/BrightQuery_list+of+IRS+industries_subsector_sector_with_codes_Sep+2021.xlsx">click
+        here</a> to download the list of IRS industries, which is the primary
+        industry classification system used by BQ.<br><br>The average response
+        time of the BQ Advanced Search API is 1 second.
+      parameters:
+        - name: bq_organization_id
+          in: query
+          description: Unique ID assigned by BQ to the Organization.
+          schema:
+            type: integer
+            example: 100005774710
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_org_executives_res_200'          
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+              examples:
+                'Bad Request, example 1':
+                  value:
+                    message: Invalid request body
+                'Bad Request, example 2':
+                  value:
+                    message: No input value
+        '422':
+          description: Search Parameter Missing 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_422'              
+        '401':
+          description: Authorization header is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_401'
+      security:
         - basicAuth: []  
 components:
   schemas:    
@@ -4433,6 +4508,329 @@ components:
           type: integer
           example: 200
 
+    search_org_executives_res_200:
+      type: object
+      properties:
+        root:
+          type: object
+          properties:
+            id:
+              type: string
+              example: toplevel
+            relevance:
+              type: integer
+              example: 1
+            fields:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                  example: 20
+            records:
+              type: array
+              items:
+                type: object
+                required:
+                  - bq_executive_id
+                  - bq_executive_name
+                  - bq_executive_first_name
+                  - bq_executive_last_name
+                  - bq_executive_middle_name
+                  - bq_executive_emails
+                  - bq_executive_emails_personal
+                  - bq_executive_emails_professional_current
+                  - bq_executive_emails_professional_history
+                  - bq_executive_landline_company_formatted
+                  - bq_executive_landlines_company
+                  - bq_executive_landlines_direct
+                  - bq_executive_landlines_direct_formatted
+                  - bq_executive_mobile_company_formatted
+                  - bq_executive_mobiles_company
+                  - bq_executive_mobiles_direct
+                  - bq_executive_mobiles_direct_formatted
+                  - bq_executive_linkedin_url
+                  - bq_executive_highest_title
+                  - bq_executive_middle_initial
+                  - bq_executive_signatory_indicator
+                  - bq_executive_titles
+                  - bq_executive_address1_line_1
+                  - bq_executive_address1_line_2
+                  - bq_executive_address1_city
+                  - bq_executive_address1_state
+                  - bq_executive_address1_state_name
+                  - bq_executive_address1_county_name
+                  - bq_executive_address1_zip_type
+                  - bq_executive_address1_zip5
+                  - bq_executive_address1_zip9
+                  - bq_executive_address1_country
+                  - bq_executive_address1_county_fips
+                  - bq_executive_address1_building_default_indicator
+                  - bq_executive_address1_cbsa_code
+                  - bq_executive_address1_cbsa_name
+                  - bq_executive_address1_cbsa_type
+                  - bq_executive_address1_congressional_district
+                  - bq_executive_address1_direct_indicator
+                  - bq_executive_address1_dpv_match_code
+                  - bq_executive_address1_latitude
+                  - bq_executive_address1_longitude
+                  - bq_executive_address1_rdi
+                  - bq_executive_address1_secondary_number
+                  - bq_executive_address1_summary
+                  - bq_executive_address1_valid_indicator
+                  - bq_organization_id
+                  - bq_organization_irs_industry_code
+                  - bq_organization_irs_industry_name
+                  - bq_organization_address1_cbsa_name
+                  - bq_organization_address1_city
+                  - bq_organization_address1_country
+                  - bq_organization_address1_county_name
+                  - bq_organization_address1_line_1
+                  - bq_organization_address1_line_2
+                  - bq_organization_address1_state
+                  - bq_organization_address1_state_name
+                  - bq_organization_address1_zip5
+                  - bq_organization_company_type
+                  - bq_organization_public_indicator
+                  - bq_organization_active_indicator
+                  - bq_organization_jurisdiction_code
+                  - bq_organization_naics_name
+                  - bq_organization_naics_sector_name
+                  - bq_organization_name
+                  - bq_organization_structure
+                  - bq_organization_subsector_name
+                  - bq_organization_naics_code
+                  - bq_organization_naics_sector_code
+                  - bq_organization_sector_code
+                  - bq_organization_sector_name
+                  - bq_organization_subsector_code
+                  - bq_employment_mr
+                  - bq_revenue_mr
+                properties:
+                  bq_executive_id:
+                    type: integer
+                    example: 8880098334714
+                  bq_executive_name:
+                    type: string
+                    example: JOHN W THOMPSON
+                  bq_executive_first_name:
+                    type: string
+                    example: JOHN
+                  bq_executive_last_name:
+                    type: string
+                    example: THOMPSON
+                  bq_executive_middle_name:
+                    type: string
+                    example: W
+                  bq_executive_emails:
+                    type: string
+                    example: jthompson@suremail.info;johnt@microsoft.com
+                  bq_executive_emails_personal:
+                    type: string
+                    example: ''
+                  bq_executive_emails_professional_current:
+                    type: string
+                    example: johnt@microsoft.com
+                  bq_executive_emails_professional_history:
+                    type: string
+                    example: ''
+                  bq_executive_landline_company_formatted:
+                    type: string
+                    example: (201) 456-9189
+                  bq_executive_landlines_company:
+                    type: string
+                    example: '+12014569189'
+                  bq_executive_landlines_direct:
+                    type: string
+                    example: ''
+                  bq_executive_landlines_direct_formatted:
+                    type: string
+                    example: ''
+                  bq_executive_mobile_company_formatted:
+                    type: string
+                    example: ''
+                  bq_executive_mobiles_company:
+                    type: string
+                    example: ''
+                  bq_executive_mobiles_direct:
+                    type: string
+                    example: ''
+                  bq_executive_mobiles_direct_formatted:
+                    type: string
+                    example: ''
+                  bq_executive_linkedin_url:
+                    type: string
+                    example: linkedin.com/in/john-thompson-314312116
+                  bq_executive_highest_title:
+                    type: string
+                    example: chairman
+                  bq_executive_middle_initial:
+                    type: string
+                    example: ''
+                  bq_executive_signatory_indicator:
+                    type: integer
+                    example: 1
+                  bq_executive_titles:
+                    type: string
+                    example: chairman;director
+                  bq_executive_address1_line_1:
+                    type: string
+                    example: 1 Microsoft Way
+                  bq_executive_address1_line_2:
+                    type: string
+                    example: ''
+                  bq_executive_address1_city:
+                    type: string
+                    example: Redmond
+                  bq_executive_address1_state:
+                    type: string
+                    example: WA
+                  bq_executive_address1_state_name:
+                    type: string
+                    example: Washington
+                  bq_executive_address1_county_name:
+                    type: string
+                    example: King County
+                  bq_executive_address1_zip_type:
+                    type: string
+                    example: Standard
+                  bq_executive_address1_zip5:
+                    type: string
+                    example: '98052'
+                  bq_executive_address1_zip9:
+                    type: string
+                    example: 98052-8300
+                  bq_executive_address1_country:
+                    type: string
+                    example: US
+                  bq_executive_address1_county_fips:
+                    type: string
+                    example: '53033'
+                  bq_executive_address1_building_default_indicator:
+                    type: string
+                    example: '1'
+                  bq_executive_address1_cbsa_code:
+                    type: string
+                    example: '42660'
+                  bq_executive_address1_cbsa_name:
+                    type: string
+                    example: Seattle-Tacoma-Bellevue, WA
+                  bq_executive_address1_cbsa_type:
+                    type: string
+                    example: Metro
+                  bq_executive_address1_congressional_district:
+                    type: string
+                    example: WA01
+                  bq_executive_address1_direct_indicator:
+                    type: integer
+                    example: 1
+                  bq_executive_address1_dpv_match_code:
+                    type: string
+                    example: D
+                  bq_executive_address1_latitude:
+                    type: number
+                    example: 47.64424
+                  bq_executive_address1_longitude:
+                    type: number
+                    example: -122.11894
+                  bq_executive_address1_rdi:
+                    type: string
+                    example: Commercial
+                  bq_executive_address1_secondary_number:
+                    type: string
+                    example: ''
+                  bq_executive_address1_summary:
+                    type: string
+                    example: Match-Mailable
+                  bq_executive_address1_valid_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_id:
+                    type: integer
+                    example: 100005774710
+                  bq_organization_irs_industry_code:
+                    type: string
+                    example: '511210'
+                  bq_organization_irs_industry_name:
+                    type: string
+                    example: Software Publishers
+                  bq_organization_address1_cbsa_name:
+                    type: string
+                    example: Seattle-Tacoma-Bellevue, WA
+                  bq_organization_address1_city:
+                    type: string
+                    example: Redmond
+                  bq_organization_address1_country:
+                    type: string
+                    example: United States
+                  bq_organization_address1_county_name:
+                    type: string
+                    example: King County
+                  bq_organization_address1_line_1:
+                    type: string
+                    example: 1 Microsoft Way
+                  bq_organization_address1_line_2:
+                    type: string
+                    example: ''
+                  bq_organization_address1_state:
+                    type: string
+                    example: WA
+                  bq_organization_address1_state_name:
+                    type: string
+                    example: Washington
+                  bq_organization_address1_zip5:
+                    type: string
+                    example: '98052'
+                  bq_organization_company_type:
+                    type: string
+                    example: Employer
+                  bq_organization_public_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_active_indicator:
+                    type: integer
+                    example: 1
+                  bq_organization_jurisdiction_code:
+                    type: string
+                    example: US_WA
+                  bq_organization_naics_name:
+                    type: string
+                    example: Software Publishers
+                  bq_organization_naics_sector_name:
+                    type: string
+                    example: Information
+                  bq_organization_name:
+                    type: string
+                    example: MICROSOFT CORP
+                  bq_organization_structure:
+                    type: string
+                    example: Multi-entity U.S. organization
+                  bq_organization_subsector_name:
+                    type: string
+                    example: Publishing Industries (except Internet)
+                  bq_organization_naics_code:
+                    type: string
+                    example: '511210'
+                  bq_organization_naics_sector_code:
+                    type: string
+                    example: '51'
+                  bq_organization_sector_code:
+                    type: string
+                    example: '51'
+                  bq_organization_sector_name:
+                    type: string
+                    example: Information
+                  bq_organization_subsector_code:
+                    type: string
+                    example: '5110'
+                  bq_employment_mr:
+                    type: integer
+                    example: 123296
+                  bq_revenue_mr:
+                    type: integer
+                    example: 236584000000
+        status:
+          type: integer
+          example: 200
 
     response_200:
       type: object
