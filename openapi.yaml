@@ -114,7 +114,7 @@ paths:
           description: Link to the Organization's primary website.
           schema:
             type: string
-            example: "www.flowersfoods.com"
+            example: "flowersfoods.com"
         - name: ein
           in: query
           description: Unique number issued by the IRS given to the Organization which is used to identify the business and certain other related entities.
@@ -156,52 +156,52 @@ paths:
         content:
           application/json:
             examples:
-              'Scenario 1: Ticker ':
-                description: Ticker.
-                value:
-                    ticker: 'MSFT'                    
-              'Scenario 2: LEI ':
-                description: LEI.
-                value:
-                  lei: '7YNCQQNDK8FBM9BBTK25'
-              'Scenario 3: CIK ':
-                description: CIK
-                value:
-                  cik: '0001128928'
-              'Scenario 4: Website ':
-                description: Website
-                value:
-                  website: 'www.flowersfoods.com'
-              'Scenario 5: EIN ':
-                description: EIN.
-                value:
-                  ein: '570384104'
-              'Scenario 6: LinkedIn URL':
-                description: LinkedIn URL.
-                value:
-                  linkedin_url: 'www.linkedin.com/flowers'
-              'Scenario 7: Name ':
-                description: Company name (fuzzy search)
-                value:
-                  company_name: 'Flower'
-              'Scenario 8: Email ':
-                description: Email
-                value:
-                  email: 'joe@flowersfoods.com'
-              'Scenario 9: BQ ID ':
-                description: BQ ID
-                value:
-                  bq_id: '100003273517'
-              'Scenario 10: Name, Website':
+              'Scenario 1: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
                   company_name: 'Flower'
-                  website: 'www.flowersfoods.com'
-              'Scenario 11: Name, Address':
+                  website: 'flowersfoods.com'
+              'Scenario 2: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
                   company_name: 'Flower'
                   website: '1919 Flowers Cir'
+              'Scenario 3: Name ':
+                description: Company name (fuzzy search)
+                value:
+                  company_name: 'Flower'
+              'Scenario 4: Website ':
+                description: Website
+                value:
+                  website: 'flowersfoods.com'
+              'Scenario 5: LinkedIn URL':
+                description: LinkedIn URL.
+                value:
+                  linkedin_url: 'www.linkedin.com/flowers'
+              'Scenario 6: EIN ':
+                description: EIN.
+                value:
+                  ein: '570384104'              
+              'Scenario 7: Ticker ':
+                description: Ticker.
+                value:
+                    ticker: 'MSFT'                    
+              'Scenario 8: LEI ':
+                description: LEI.
+                value:
+                  lei: '7YNCQQNDK8FBM9BBTK25'
+              'Scenario 9: CIK ':
+                description: CIK
+                value:
+                  cik: '0001128928'    
+              'Scenario 10: BQ ID ':
+                description: BQ ID
+                value:
+                  bq_id: '100003273517'                                                    
+              'Scenario 11: Email ':
+                description: Email
+                value:
+                  email: 'joe@flowersfoods.com'                                          
       responses:
         '200':
           description: Successful Operation
@@ -284,7 +284,7 @@ paths:
           description: Link to the Organization's primary website.
           schema:
             type: string
-            example: "www.flowersfoods.com"                        
+            example: "flowersfoods.com"                        
         - name: address
           in: query
           description: Address of Legal Entity.
@@ -302,32 +302,32 @@ paths:
         content:
           application/json:
             examples:
-              'Scenario 1: Name ':
-                description: Company name (fuzzy search)
-                value:
-                  company_name: 'Flower' 
-              'Scenario 2: EIN ':
-                description: EIN.
-                value:
-                  ein: '570384104'                                         
-              'Scenario 3: Website ':
-                description: Website
-                value:
-                  website: 'www.flowersfoods.com'              
-              'Scenario 4: Email ':
-                description: Email
-                value:
-                  email: 'joe@flowersfoods.com'              
-              'Scenario 5: Name, Website':
+              'Scenario 1: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
                   company_name: 'Flower'
-                  website: 'www.flowersfoods.com'
-              'Scenario 6: Name, Address':
+                  website: 'flowersfoods.com'
+              'Scenario 2: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
                   company_name: 'Flower'
                   website: '1919 Flowers Cir'
+              'Scenario 3: Name ':
+                description: Company name (fuzzy search)
+                value:
+                  company_name: 'Flower' 
+              'Scenario 4: Website ':
+                description: Website
+                value:
+                  website: 'flowersfoods.com'
+              'Scenario 5: EIN ':
+                description: EIN.
+                value:
+                  ein: '570384104'                                                                     
+              'Scenario 6: Email ':
+                description: Email
+                value:
+                  email: 'joe@flowersfoods.com'                            
       responses:
         '200':
           description: Successful Operation
@@ -508,7 +508,7 @@ paths:
           description: Link to the Organization's primary website.
           schema:
             type: string
-            example: "www.flowersfoods.com"
+            example: "flowersfoods.com"
         - name: ein
           in: query
           description: Unique number issued by the IRS given to the Organization which is used to identify the business and certain other related entities.
@@ -550,52 +550,52 @@ paths:
         content:
           application/json:
             examples:
-              'Scenario 1: Ticker ':
-                description: Ticker.
-                value:
-                    ticker: 'MSFT'                    
-              'Scenario 2: LEI ':
-                description: LEI.
-                value:
-                  lei: '7YNCQQNDK8FBM9BBTK25'
-              'Scenario 3: CIK ':
-                description: CIK
-                value:
-                  cik: '0001128928'
-              'Scenario 4: Website ':
-                description: Website
-                value:
-                  website: 'www.flowersfoods.com'
-              'Scenario 5: EIN ':
-                description: EIN.
-                value:
-                  ein: '570384104'
-              'Scenario 6: LinkedIn URL':
-                description: LinkedIn URL.
-                value:
-                  linkedin_url: 'www.linkedin.com/flowers'
-              'Scenario 7: Name ':
-                description: Company name (fuzzy search)
-                value:
-                  company_name: 'Flower'
-              'Scenario 8: Email ':
-                description: Email
-                value:
-                  email: 'joe@flowersfoods.com'
-              'Scenario 9: BQ ID ':
-                description: BQ ID
-                value:
-                  bq_id: '100003273517'
-              'Scenario 10: Name, Website':
+              'Scenario 1: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
                   company_name: 'Flower'
-                  website: 'www.flowersfoods.com'
-              'Scenario 11: Name, Address':
+                  website: 'flowersfoods.com'
+              'Scenario 2: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
                   company_name: 'Flower'
                   website: '1919 Flowers Cir'
+              'Scenario 3: Name ':
+                description: Company name (fuzzy search)
+                value:
+                  company_name: 'Flower'
+              'Scenario 4: Website ':
+                description: Website
+                value:
+                  website: 'flowersfoods.com'
+              'Scenario 5: LinkedIn URL':
+                description: LinkedIn URL.
+                value:
+                  linkedin_url: 'www.linkedin.com/flowers'
+              'Scenario 6: EIN ':
+                description: EIN.
+                value:
+                  ein: '570384104'              
+              'Scenario 7: Ticker ':
+                description: Ticker.
+                value:
+                    ticker: 'MSFT'                    
+              'Scenario 8: LEI ':
+                description: LEI.
+                value:
+                  lei: '7YNCQQNDK8FBM9BBTK25'
+              'Scenario 9: CIK ':
+                description: CIK
+                value:
+                  cik: '0001128928'    
+              'Scenario 10: BQ ID ':
+                description: BQ ID
+                value:
+                  bq_id: '100003273517'                                                    
+              'Scenario 11: Email ':
+                description: Email
+                value:
+                  email: 'joe@flowersfoods.com'
       responses:
         '200':
           description: Successful Operation
@@ -629,8 +629,7 @@ paths:
     post:
       summary: Legal Entity Search & Append API
       tags:
-        - KYB Append API
-      
+        - KYB Append API      
       description: >-
         The BQ Advanced Search API is generally suitable for clients in capital
         markets, investment banking, consulting, private equity, and venture
@@ -678,7 +677,7 @@ paths:
           description: Link to the Organization's primary website.
           schema:
             type: string
-            example: "www.flowersfoods.com"                        
+            example: "flowersfoods.com"                        
         - name: address
           in: query
           description: Address of Legal Entity.
@@ -696,32 +695,32 @@ paths:
         content:
           application/json:
             examples:
-              'Scenario 1: Name ':
-                description: Company name (fuzzy search)
-                value:
-                  company_name: 'Flower' 
-              'Scenario 2: EIN ':
-                description: EIN.
-                value:
-                  ein: '570384104'                                         
-              'Scenario 3: Website ':
-                description: Website
-                value:
-                  website: 'www.flowersfoods.com'              
-              'Scenario 4: Email ':
-                description: Email
-                value:
-                  email: 'joe@flowersfoods.com'              
-              'Scenario 5: Name, Website':
+              'Scenario 1: Name, Website':
                 description: Company name (fuzzy search) and website extact match
                 value:
                   company_name: 'Flower'
-                  website: 'www.flowersfoods.com'
-              'Scenario 6: Name, Address':
+                  website: 'flowersfoods.com'
+              'Scenario 2: Name, Address':
                 description: Company name (fuzzy search) and Address match
                 value:
                   company_name: 'Flower'
                   website: '1919 Flowers Cir'
+              'Scenario 3: Name ':
+                description: Company name (fuzzy search)
+                value:
+                  company_name: 'Flower' 
+              'Scenario 4: Website ':
+                description: Website
+                value:
+                  website: 'flowersfoods.com'
+              'Scenario 5: EIN ':
+                description: EIN.
+                value:
+                  ein: '570384104'                                                                     
+              'Scenario 6: Email ':
+                description: Email
+                value:
+                  email: 'joe@flowersfoods.com'
       responses:
         '200':
           description: Successful Operation
